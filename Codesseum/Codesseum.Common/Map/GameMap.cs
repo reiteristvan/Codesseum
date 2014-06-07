@@ -1,12 +1,18 @@
 ﻿using System.IO;
+using Codesseum.Common.Types;
 
-namespace Codesseum.Common
+namespace Codesseum.Common.Map
 {
-    public class Map
+    public class GameMap
     {
-        public Map(string mapName)
+        public GameMap(string mapPath)
         {
-            var lines = File.ReadAllLines(mapName);
+            _path = mapPath;
+        }
+
+        public void Load()
+        {
+            var lines = File.ReadAllLines(_path);
             _map = new int[lines[0].Length, lines.Length];
             Width = lines[0].Length;
             Height = lines.Length;
@@ -37,6 +43,15 @@ namespace Codesseum.Common
             }
         }
 
-        private readonly int[,] _map;
+        public int this[Coordinate coordinate]
+        {
+            get
+            {
+                return this[coordinate.X, coordinate.Y];
+            }
+        }
+
+        private readonly string _path;
+        private int[,] _map;
     }
 }

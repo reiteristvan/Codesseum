@@ -10,14 +10,14 @@ namespace Codesseum.TestBot
             TeamName = "almabeka";
         }
 
-        public override BotAction NextAction()
+        public override BotAction NextAction(World world)
         {
             return null;
         }
 
         public override int[] GetAttributes()
         {
-            throw new System.NotImplementedException();
+            return new[] { 5, 5, 5, 5 };
         }
     }
 }
