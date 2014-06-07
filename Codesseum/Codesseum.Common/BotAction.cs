@@ -1,4 +1,6 @@
-﻿namespace Codesseum.Common
+﻿using Codesseum.Common.Types;
+
+namespace Codesseum.Common
 {
     public class BotAction
     {

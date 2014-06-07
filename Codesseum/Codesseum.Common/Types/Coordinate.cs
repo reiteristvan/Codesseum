@@ -1,4 +1,4 @@
-﻿namespace Codesseum.Common
+﻿namespace Codesseum.Common.Types
 {
     public class Coordinate
     {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Codesseum.Common.Entities;
+using Codesseum.Common.Types;
 
 namespace Codesseum.Common
 {
