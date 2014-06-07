@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Codesseum.Common.Entities;
 using Codesseum.Common.Types;
+using Codesseum.Common.Map;
 
 namespace Codesseum.Common
 {
@@ -13,8 +14,8 @@ namespace Codesseum.Common
         public Engine(GameConfiguration configuration)
         {
             _configuration = configuration;
+            _map = new GameMap(_configuration.MapPath);
 
-            _map = new Map(_configuration.MapPath);
             LoadBotTypes(_configuration.BotPathList);
         }
 
@@ -26,6 +27,10 @@ namespace Codesseum.Common
             }
 
             // load map
+            _map.Load();
+
+            // initialize items
+            SetItems();
 
             // initialize bots
             foreach (var botType in _botTypes)
@@ -41,8 +46,6 @@ namespace Codesseum.Common
                     _points.Add(bot.TeamName, 0);
                 }
             }
-
-            // initialize items
 
             int turn = 0;
             while (turn < _configuration.NumberOfTurns)
@@ -61,7 +64,7 @@ namespace Codesseum.Common
                     {
                         var newCoordinate = new Coordinate(random.Next(_map.Width, _map.Height));
 
-                        if (_map[newCoordinate.X, newCoordinate.Y] == 0)
+                        if (_map[newCoordinate] == 0)
                         {
                             if (!_bots.Any(b => b.Position.X == newCoordinate.X && b.Position.Y == newCoordinate.Y))
                             {
@@ -79,16 +82,15 @@ namespace Codesseum.Common
                 {
                     if (bot.IsDead) { continue; }
 
-                    var action = bot.NextAction();
+                    var action = bot.NextAction(CreateWorldInfo());
 
-                    // invalid move either case
-                    if (_map[action.Target.X, action.Target.Y] == -1)
+                    // invalid move either case, no need to refresh world info
+                    if (_map[action.Target] == -1)
                     {
                         continue;
                     }
 
-                    var botOnCoordinate = _bots.FirstOrDefault(
-                        b => b.Position.X == action.Target.X && b.Position.Y == action.Target.Y);
+                    var botOnCoordinate = _bots.FirstOrDefault(b => b.Position.Equals(action.Target));
 
                     if (action.Action == ActionType.Move)
                     {
@@ -127,6 +129,39 @@ namespace Codesseum.Common
             }
         }
 
+        private void SetItems()
+        {
+            var random = new Random();
+            for (int i = 0; i < 5 - _items.Count; ++i)
+            {
+                bool l = false;
+                while (!l)
+                {
+                    var c = Coordinate.CreateRandom(_map.Width, _map.Height, random);
+
+                    if (_map[c] != -1)
+                    {
+                        _items.Add(
+                            new Item(c, 
+                                    (ItemType)random.Next(4), 
+                                    random.Next(4), 
+                                    (PowerUpType)random.Next(4)));
+                        l = true;
+                    }
+                }
+            }
+        }
+
+        private World CreateWorldInfo()
+        {
+            return new World
+            {
+                Bots = new List<Bot>(_bots),
+                Items = new List<Item>(_items),
+                Map = _map
+            };
+        }
+
         private void LoadBotTypes(IEnumerable<string> pathList)
         {
             foreach (var path in pathList)
@@ -141,7 +176,6 @@ namespace Codesseum.Common
                 _botTypes.Add(botType);
             }
         }
-
         private Type LoadBotTypeFromAssembly(string path)
         {
             var absolutePath = Directory.GetCurrentDirectory() + "\\" + path;
@@ -153,9 +187,10 @@ namespace Codesseum.Common
         }
 
         private readonly GameConfiguration _configuration;
-        private readonly Map _map;
+        private readonly GameMap _map;
         private readonly List<Type> _botTypes = new List<Type>(); 
         private readonly List<Bot> _bots = new List<Bot>();
-        private readonly Dictionary<string, int> _points = new Dictionary<string, int>(); 
+        private readonly List<Item> _items = new List<Item>(); 
+        private readonly Dictionary<string, int> _points = new Dictionary<string, int>();
     }
 }
