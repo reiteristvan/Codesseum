@@ -1,4 +1,5 @@
 ﻿using Codesseum.Common;
+using Codesseum.Common.Entities;
 
 namespace Codesseum.TestBot
 {

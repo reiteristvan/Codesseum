@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bot.cs" />
-    <Compile Include="Coordinate.cs" />
+    <Compile Include="Entities\Bot.cs" />
+    <Compile Include="Types\Coordinate.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="GameConfiguration.cs" />
-    <Compile Include="Item.cs" />
+    <Compile Include="Entities\Item.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="BotAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

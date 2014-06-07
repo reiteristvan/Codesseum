@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Codesseum.Common.Types;
 
-namespace Codesseum.Common
+namespace Codesseum.Common.Entities
 {
     public abstract class Bot
     {

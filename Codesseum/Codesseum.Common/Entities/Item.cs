@@ -1,4 +1,4 @@
-﻿namespace Codesseum.Common
+﻿namespace Codesseum.Common.Entities
 {
     public class Item
     {
