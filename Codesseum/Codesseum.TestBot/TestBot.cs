@@ -1,5 +1,6 @@
 ﻿using Codesseum.Common;
 using Codesseum.Common.Entities;
+using Codesseum.Common.Types;
 
 namespace Codesseum.TestBot
 {
@@ -12,7 +13,11 @@ namespace Codesseum.TestBot
 
         public override BotAction NextAction(World world)
         {
-            return null;
+            return new BotAction
+            {
+                Action = ActionType.Move,
+                Target = Coordinate.CreateRandom(world.Map.Width, world.Map.Height)
+            };
         }
 
         public override int[] GetAttributes()
