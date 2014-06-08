@@ -17,7 +17,7 @@ namespace Codesseum.TestBot
 
         public override int[] GetAttributes()
         {
-            return new[] { 5, 5, 5, 5 };
+            return new[] { 5, 5, 5, 5, 5 };
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Codesseum.Common.Entities
             Power = 5;
             Defense = 5;
             Speed = 5;
+            Range = 5;
         }
 
         // Properties
@@ -26,6 +27,7 @@ namespace Codesseum.Common.Entities
         public int Power { get; internal set; }
         public int Defense { get; internal set; }
         public int Speed { get; internal set; }
+        public int Range { get; internal set; }
 
         public Coordinate Position { get; set; }
         public int Ammunition { get; set; }
@@ -43,7 +45,7 @@ namespace Codesseum.Common.Entities
 
         internal void SetAttributes(int[] values)
         {
-            if (values.Length != 4 || values.Sum() != 20 || values.Any(v => v <= 0))
+            if (values.Length != 5 || values.Sum() != 25 || values.Any(v => v <= 0))
             {
                 throw new ArgumentException("Bot attributes are invalid");
             }
@@ -52,6 +54,7 @@ namespace Codesseum.Common.Entities
             Power = values[1];
             Defense = values[2];
             Speed = values[3];
+            Range = values[4];
         }
     }
 }
