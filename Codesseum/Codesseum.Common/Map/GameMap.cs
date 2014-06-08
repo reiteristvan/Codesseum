@@ -13,7 +13,7 @@ namespace Codesseum.Common.Map
         public void Load()
         {
             var lines = File.ReadAllLines(_path);
-            _map = new int[lines[0].Length, lines.Length];
+            _map = new int[lines.Length, lines[0].Length];
             Width = lines[0].Length;
             Height = lines.Length;
 
@@ -34,7 +34,7 @@ namespace Codesseum.Common.Map
             get
             {
                 // invalid coordinate
-                if (i < 0 || i > Width || j < 0 || j > Height)
+                if (i < 0 || i > Height || j < 0 || j > Width)
                 {
                     return -1;
                 }

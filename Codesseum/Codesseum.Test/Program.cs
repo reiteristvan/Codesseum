@@ -15,7 +15,7 @@ namespace Codesseum.Test
                 BotsPerTeam = 5,
                 GameType = 1,
                 MapPath = "testMap.txt"
-            });
+            }, Console.OpenStandardOutput());
 
             engine.Start();
 

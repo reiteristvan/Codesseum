@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Codesseum.Common.Entities;
+using Codesseum.Common.Log;
 using Codesseum.Common.Types;
 using Codesseum.Common.Map;
 
@@ -11,8 +12,9 @@ namespace Codesseum.Common
 {
     public class Engine
     {
-        public Engine(GameConfiguration configuration)
+        public Engine(GameConfiguration configuration, Stream logOutput = null)
         {
+            _logger = new Logger(logOutput);
             _configuration = configuration;
             _map = new GameMap(_configuration.MapPath);
 
@@ -40,13 +42,19 @@ namespace Codesseum.Common
                     bot.Position = GetRandomBotPosition();
 
                     _bots.Add(bot);
-                    _points.Add(bot.TeamName, 0);
+
+                    if (!_points.ContainsKey(bot.TeamName))
+                    {
+                        _points.Add(bot.TeamName, 0);
+                    }
                 }
             }
 
             int turn = 0;
             while (turn < _configuration.NumberOfTurns)
             {
+                _logger.Log(string.Format("Turn: {0}", turn));
+
                 // set dead bots alive and reposition
                 foreach (var deadBot in _bots.Where(b => b.IsDead))
                 {
@@ -103,8 +111,10 @@ namespace Codesseum.Common
                     }
                     else // attack bot on target field
                     {
-                        // invalid targets or no ammunition
-                        if (botOnCoordinate == null || bot.Ammunition == 0)
+                        // invalid targets or no ammunition or teammate
+                        if (botOnCoordinate == null || 
+                            bot.Ammunition == 0 || 
+                            botOnCoordinate.TeamName == bot.TeamName)
                         {
                             continue;
                         }
@@ -228,5 +238,6 @@ namespace Codesseum.Common
         private readonly List<Bot> _bots = new List<Bot>();
         private readonly List<Item> _items = new List<Item>(); 
         private readonly Dictionary<string, int> _points = new Dictionary<string, int>();
+        private readonly Logger _logger;
     }
 }
