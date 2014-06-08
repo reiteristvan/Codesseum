@@ -29,18 +29,15 @@ namespace Codesseum.Common
             // load map
             _map.Load();
 
-            // initialize items
-            SetItems();
-
             // initialize bots
             foreach (var botType in _botTypes)
             {
                 for (var i = 0; i < _configuration.BotsPerTeam; ++i)
                 {
                     var bot = (Bot)Activator.CreateInstance(botType);
-                    bot.SetAttributes(bot.GetAttributes());
 
-                    // set positions
+                    bot.SetAttributes(bot.GetAttributes());
+                    bot.Position = GetRandomBotPosition();
 
                     _bots.Add(bot);
                     _points.Add(bot.TeamName, 0);
@@ -55,27 +52,11 @@ namespace Codesseum.Common
                 {
                     deadBot.IsDead = false;
                     deadBot.SetAttributes(deadBot.GetAttributes());
-
-                    bool isCoordinateGood = false;
-                    var random = new Random();
-
-                    Coordinate newPosition = null;
-                    while (isCoordinateGood == false)
-                    {
-                        var newCoordinate = new Coordinate(random.Next(_map.Width, _map.Height));
-
-                        if (_map[newCoordinate] == 0)
-                        {
-                            if (!_bots.Any(b => b.Position.X == newCoordinate.X && b.Position.Y == newCoordinate.Y))
-                            {
-                                isCoordinateGood = true;
-                                newPosition = newCoordinate;
-                            }
-                        }
-                    }
-
-                    deadBot.Position = newPosition;
+                    deadBot.Position = GetRandomBotPosition();
                 }
+
+                // initialize items
+                SetItems();
 
                 // move
                 foreach (var bot in _bots.OrderBy(b => b.Speed))
@@ -101,20 +82,45 @@ namespace Codesseum.Common
                         }
 
                         bot.Position = action.Target;
+
+                        // check for items and powerups
+                        if (IsItemOnCoordinate(action.Target))
+                        {
+                            var item = _items.First(i => i.Position.Equals(action.Target));
+
+                            switch (item.Type)
+                            {
+                                case ItemType.Ammunition:
+                                    bot.Ammunition += item.Value;
+                                    break;
+                                case ItemType.MediPack:
+                                    bot.Health += item.Value;
+                                    break;
+                                case ItemType.PowerUp:
+                                    break;
+                            }
+                        }
                     }
                     else // attack bot on target field
                     {
-                        // invalid targets
-                        if (botOnCoordinate == null)
+                        // invalid targets or no ammunition
+                        if (botOnCoordinate == null || bot.Ammunition == 0)
                         {
                             continue;
                         }
 
                         // check if bot is in range
+                        if (Math.Abs(action.Target.X - bot.Position.X) > bot.Range ||
+                            Math.Abs(action.Target.Y - bot.Position.Y) > bot.Range
+                            )
+                        {
+                            continue;
+                        }
 
                         // attack
 
                         var damage = bot.Power - (botOnCoordinate.Defense/2);
+                        --bot.Ammunition;
                         botOnCoordinate.Health -= damage;
 
                         if (botOnCoordinate.Health <= 0)
@@ -127,6 +133,36 @@ namespace Codesseum.Common
 
                 ++turn;
             }
+        }
+
+        private Coordinate GetRandomBotPosition()
+        {
+            Coordinate result = null;
+            bool l = false;
+            var random = new Random();
+
+            while (!l)
+            {
+                var _c = Coordinate.CreateRandom(_map.Width, _map.Height, random);
+
+                if (_map[_c] != -1 && !IsBotOnCoordinate(_c) && !IsItemOnCoordinate(_c))
+                {
+                    result = _c;
+                    l = true;
+                }
+            }
+
+            return result;
+        }
+
+        private bool IsItemOnCoordinate(Coordinate coordinate)
+        {
+            return _items.Any(i => i.Position.Equals(coordinate));
+        }
+
+        private bool IsBotOnCoordinate(Coordinate coordinate)
+        {
+            return _bots.Any(b => b.Position.Equals(coordinate));
         }
 
         private void SetItems()
