@@ -8,9 +8,9 @@ namespace Codesseum.Test
     {
         static void Main()
         {
-            var engine = new Common.Engine(new GameConfiguration
+            var engine = new Engine(new GameConfiguration
             {
-                NumberOfTurns = 100,
+                NumberOfTurns = 1000,
                 BotPathList = new List<string> { "TestBot.dll" },
                 BotsPerTeam = 5,
                 GameType = 1,

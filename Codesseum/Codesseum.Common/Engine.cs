@@ -74,7 +74,9 @@ namespace Codesseum.Common
                     var action = bot.NextAction(CreateWorldInfo());
 
                     // invalid move either case, no need to refresh world info
-                    if (_map[action.Target] == -1)
+                    if (_map[action.Target] == -1 || 
+                        !IsTwoCoordinateInLine(bot.Position, action.Target) ||
+                        IsThereBlockBetweenCoordinates(bot.Position, action.Target))
                     {
                         continue;
                     }
@@ -173,6 +175,54 @@ namespace Codesseum.Common
         private bool IsBotOnCoordinate(Coordinate coordinate)
         {
             return _bots.Any(b => b.Position.Equals(coordinate));
+        }
+
+        private bool IsTwoCoordinateInLine(Coordinate lhs, Coordinate rhs)
+        {
+            return lhs.X == rhs.X || lhs.Y == rhs.Y;
+        }
+
+        private bool IsThereBlockBetweenCoordinates(Coordinate lhs, Coordinate rhs)
+        {
+            return lhs.X == rhs.X ? CheckForBlockVertical(lhs, rhs) : CheckForBlockHorizontal(lhs, rhs);
+        }
+
+        // Y coordinates
+        private bool CheckForBlockVertical(Coordinate lhs, Coordinate rhs)
+        {
+            int step = lhs.Y > rhs.Y ? -1 : 1;
+            int i = lhs.Y + step;
+            
+            while (i == rhs.Y)
+            {
+                if (_map[lhs.X, i] == -1)
+                {
+                    return true;
+                }
+
+                i += step;
+            }
+
+            return false;
+        }
+
+        // X coordinates
+        private bool CheckForBlockHorizontal(Coordinate lhs, Coordinate rhs)
+        {
+            int step = lhs.X > rhs.X ? -1 : 1;
+            int i = lhs.X + step;
+
+            while (i == rhs.X)
+            {
+                if (_map[i, lhs.Y] == -1)
+                {
+                    return true;
+                }
+
+                i += step;
+            }
+
+            return false;
         }
 
         private void SetItems()
