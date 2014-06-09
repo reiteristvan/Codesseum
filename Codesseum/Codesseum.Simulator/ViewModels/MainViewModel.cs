@@ -17,22 +17,34 @@ namespace Codesseum.Simulator.ViewModels
         {
             AddBotCommand = new RelayCommand(AddBot);
             RemoveBotCommand = new RelayCommand(RemoveBot);
+            StartSimulationCommand = new RelayCommand(StartSimulation);
 
             _botInformations = new ObservableCollection<BotInfo>();
+            _logs = new ObservableCollection<string>();
         }
 
         public void AddBot()
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "C# assemblies (*.dll)|*.dll";
+            dialog.Multiselect = true;
 
             if (dialog.ShowDialog() == true)
             {
                 foreach (var fileName in dialog.FileNames)
                 {
+                    if (!IsAssemblyValid(fileName))
+                    {
+                        Logs.Add("Invalid assembly");
+                        continue;
+                    }
+
+                    Logs.Add("Bot loaded");
+
                     BotInformations.Add(new BotInfo
                     {
-                        Path = fileName
+                        Path = fileName,
+                        TeamName = ExtractTeamName(fileName)
                     });
                 }
             }
@@ -43,39 +55,55 @@ namespace Codesseum.Simulator.ViewModels
             
         }
 
+        public void StartSimulation()
+        {
+            
+        }
+
         private bool IsAssemblyValid(string path)
         {
-            var assembly = Assembly.LoadFile(path);
-            var type = assembly.GetTypes()
-                .FirstOrDefault(t => t.Name.Contains(Path.GetFileNameWithoutExtension(path)));
-            var bot = Activator.CreateInstance(type) as Bot;
-
-            return bot != null;
+            return LoadBot(path) != null;
         }
 
         private string ExtractTeamName(string path)
         {
+            return LoadBot(path).TeamName;
+        }
+
+        private Bot LoadBot(string path)
+        {
             var assembly = Assembly.LoadFile(path);
             var type = assembly.GetTypes()
                 .FirstOrDefault(t => t.Name.Contains(Path.GetFileNameWithoutExtension(path)));
-            var bot = Activator.CreateInstance(type) as Bot;
 
-            return bot.TeamName;
+            if (type == null)
+            {
+                return null;
+            }
+
+            return Activator.CreateInstance(type) as Bot;
         }
 
         // Commands
 
         public RelayCommand AddBotCommand { get; private set; }
         public RelayCommand RemoveBotCommand { get; private set; }
+        public RelayCommand StartSimulationCommand { get; private set; }
 
         // Properties
 
         private ObservableCollection<BotInfo> _botInformations;
-
         public ObservableCollection<BotInfo> BotInformations
         {
             get { return _botInformations; }
             set { Set(() => BotInformations, ref _botInformations, value); }
+        }
+
+        private ObservableCollection<string> _logs;
+        public ObservableCollection<string> Logs
+        {
+            get { return _logs; }
+            set { Set(() => Logs, ref _logs, value); }
         }
     }
 }
