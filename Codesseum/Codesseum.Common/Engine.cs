@@ -282,6 +282,11 @@ namespace Codesseum.Common
             return type;
         }
 
+        public GameMap Map
+        {
+            get { return _map; }
+        }
+
         private readonly GameConfiguration _configuration;
         private readonly GameMap _map;
         private readonly List<Type> _botTypes = new List<Type>(); 
