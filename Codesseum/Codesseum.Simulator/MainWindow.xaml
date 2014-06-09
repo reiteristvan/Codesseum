@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:Codesseum.Simulator.ViewModels"
-        Title="MainWindow" Height="480" Width="640">
-    <Grid>
+        Title="MainWindow" Height="480" Width="640" ResizeMode="NoResize">
+    <Grid x:Name="Root">
         <Grid.DataContext>
             <viewModels:MainViewModel />
         </Grid.DataContext>
@@ -16,7 +16,18 @@
         </Grid.RowDefinitions>
         
         <!-- Settings -->
-        <StackPanel Grid.Row="0"></StackPanel>
+        <StackPanel DataContext="{Binding Path=Configuration}" 
+                    Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Text="Map: " />
+            <TextBox Text="{Binding Path=MapPath}" />
+            <Button Command="{Binding ElementName=Root, Path=DataContext.AddMapCommand}" Content="..." />
+            
+            <TextBlock Text="Bots per team: " />
+            <TextBox Text="{Binding Path=BotsPerTeam}" />
+            
+            <TextBlock Text="Number of turns: " />
+            <TextBox Text="{Binding Path=NumberOfTurns}" />
+        </StackPanel>
         
         <!-- Bots -->
         <StackPanel Grid.Row="1">
@@ -42,7 +53,7 @@
         
         <!-- Commands -->
         <StackPanel Grid.Row="2">
-            <Button Command="{Binding Path=StartSimulationCommand}" Content="Start" />
+            <Button Command="{Binding Path=StartSimulationCommand}" Content="OK" />
         </StackPanel>
     </Grid>
 </Window>
