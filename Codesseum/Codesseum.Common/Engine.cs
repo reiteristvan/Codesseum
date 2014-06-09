@@ -214,7 +214,7 @@ namespace Codesseum.Common
 
             while (i == rhs.X)
             {
-                if (_map[i, lhs.Y] == -1)
+                if (_map[i, lhs.Y] == 1)
                 {
                     return true;
                 }
@@ -235,7 +235,7 @@ namespace Codesseum.Common
                 {
                     var c = Coordinate.CreateRandom(_map.Width, _map.Height, random);
 
-                    if (_map[c] != -1)
+                    if (_map[c] != 1)
                     {
                         _items.Add(
                             new Item(c, 
