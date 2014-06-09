@@ -4,7 +4,7 @@ namespace Codesseum.Simulator.ViewModels
 {
     public class ConfigurationViewModel : ViewModelBase
     {
-        private string _mapPath;
+        private string _mapPath = "";
         public string MapPath
         {
             get { return _mapPath; }
@@ -25,7 +25,7 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => BotsPerTeam, ref _botsPerTeam, value); }
         }
 
-        private string _gameType;
+        private string _gameType = "";
         public string GameType
         {
             get { return _gameType; }
