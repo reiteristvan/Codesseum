@@ -71,7 +71,7 @@
     </ApplicationDefinition>
     <Compile Include="Messages\StartMessage.cs" />
     <Compile Include="Models\BotInfoModel.cs" />
-    <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="SimulatorWindow.xaml.cs">
       <DependentUpon>SimulatorWindow.xaml</DependentUpon>
     </Compile>

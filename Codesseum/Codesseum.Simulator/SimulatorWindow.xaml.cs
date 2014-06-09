@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Codesseum.Common;
 using Codesseum.Simulator.Messages;
 using Codesseum.Simulator.Models;
 using Codesseum.Simulator.ViewModels;
@@ -16,12 +17,10 @@ namespace Codesseum.Simulator
             InitializeComponent();
         }
 
-        public void Show(IEnumerable<BotInfoModel> bots)
+        public void Show(GameConfiguration configuration)
         {
-            DataContext = new SimulatorViewModel(bots);
+            DataContext = new SimulatorViewModel(configuration);
             Show();
-
-            Messenger.Default.Send(new StartMessage());
         }
     }
 }

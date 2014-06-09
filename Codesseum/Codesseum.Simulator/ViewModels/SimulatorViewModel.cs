@@ -13,14 +13,8 @@ namespace Codesseum.Simulator.ViewModels
 {
     public class SimulatorViewModel : ViewModelBase
     {
-        public SimulatorViewModel(IEnumerable<BotInfoModel> botInfo)
+        public SimulatorViewModel(GameConfiguration configuration)
         {
-            Messenger.Default.Register<StartMessage>(this, StartSimulation);
-        }
-
-        private void StartSimulation(StartMessage configuration)
-        {
-            
         }
     }
 }

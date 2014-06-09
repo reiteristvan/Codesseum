@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Codesseum.Common;
 using Codesseum.Common.Entities;
 using Codesseum.Simulator.Models;
 using GalaSoft.MvvmLight;
@@ -15,15 +16,28 @@ namespace Codesseum.Simulator.ViewModels
     {
         public MainViewModel()
         {
+            AddMapCommand = new RelayCommand(AddMap);
             AddBotCommand = new RelayCommand(AddBot);
             RemoveBotCommand = new RelayCommand(RemoveBot);
             StartSimulationCommand = new RelayCommand(StartSimulation);
 
             _botInformations = new ObservableCollection<BotInfoModel>();
             _logs = new ObservableCollection<string>();
+            Configuration = new ConfigurationViewModel();
         }
 
-        public void AddBot()
+        private void AddMap()
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Text files (*.txt) | *.txt";
+
+            if (dialog.ShowDialog() == true)
+            {
+                Configuration.MapPath = dialog.FileName;
+            }
+        }
+
+        private void AddBot()
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "C# assemblies (*.dll)|*.dll";
@@ -50,7 +64,7 @@ namespace Codesseum.Simulator.ViewModels
             }
         }
 
-        public void RemoveBot()
+        private void RemoveBot()
         {
             var botToRemove = _botInformations.FirstOrDefault(b => b.TeamName == SelectedBot.TeamName);
             _botInformations.Remove(botToRemove);
@@ -58,10 +72,17 @@ namespace Codesseum.Simulator.ViewModels
             Logs.Add("Bot removed");
         }
 
-        public void StartSimulation()
+        private void StartSimulation()
         {
             var simulator = new SimulatorWindow();
-            simulator.Show(BotInformations);
+            simulator.Show(new GameConfiguration
+            {
+                BotPathList = BotInformations.Select(b => b.Path).ToList(),
+                BotsPerTeam = int.Parse(Configuration.BotsPerTeam),
+                GameType = int.Parse(Configuration.GameType),
+                MapPath = Configuration.MapPath,
+                NumberOfTurns = int.Parse(Configuration.NumberOfTurns)
+            });
         }
 
         private bool IsAssemblyValid(string path)
@@ -90,6 +111,7 @@ namespace Codesseum.Simulator.ViewModels
 
         // Commands
 
+        public RelayCommand AddMapCommand { get; private set; }
         public RelayCommand AddBotCommand { get; private set; }
         public RelayCommand RemoveBotCommand { get; private set; }
         public RelayCommand StartSimulationCommand { get; private set; }
@@ -116,5 +138,7 @@ namespace Codesseum.Simulator.ViewModels
             get { return _selectedBot; }
             set { Set(() => SelectedBot, ref _selectedBot, value); }
         }
+
+        public ConfigurationViewModel Configuration { get; set; }
     }
 }
