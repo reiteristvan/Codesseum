@@ -1,0 +1,39 @@
+﻿<Window x:Class="Codesseum.Simulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:Codesseum.Simulator.ViewModels"
+        Title="MainWindow" Height="480" Width="640">
+    <Grid>
+        <Grid.DataContext>
+            <viewModels:MainViewModel />
+        </Grid.DataContext>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- Settings -->
+        <StackPanel Grid.Row="0"></StackPanel>
+        
+        <!-- Bots -->
+        <StackPanel Grid.Row="1">
+            <ListBox ItemsSource="{Binding Path=BotInformations}" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=Path}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding Path=AddBotCommand}" Content="Add" />
+        </StackPanel>
+        
+        <!-- Commands -->
+        <StackPanel Grid.Row="2">
+            <Button Content="Start" />
+        </StackPanel>
+    </Grid>
+</Window>
