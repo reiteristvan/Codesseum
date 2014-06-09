@@ -20,7 +20,8 @@
         
         <!-- Bots -->
         <StackPanel Grid.Row="1">
-            <ListBox ItemsSource="{Binding Path=BotInformations}" >
+            <ListBox ItemsSource="{Binding Path=BotInformations}" 
+                     SelectedItem="{Binding Path=SelectedBot}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -30,7 +31,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Command="{Binding Path=AddBotCommand}" Content="Add" />
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding Path=AddBotCommand}" Content="Add" />
+                <Button Command="{Binding Path=RemoveBotCommand}" Content="Remove" />
+            </StackPanel>
         </StackPanel>
         
         <!-- Log -->
@@ -38,7 +42,7 @@
         
         <!-- Commands -->
         <StackPanel Grid.Row="2">
-            <Button Content="Start" />
+            <Button Command="{Binding Path=StartSimulationCommand}" Content="Start" />
         </StackPanel>
     </Grid>
 </Window>

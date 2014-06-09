@@ -19,7 +19,7 @@ namespace Codesseum.Simulator.ViewModels
             RemoveBotCommand = new RelayCommand(RemoveBot);
             StartSimulationCommand = new RelayCommand(StartSimulation);
 
-            _botInformations = new ObservableCollection<BotInfo>();
+            _botInformations = new ObservableCollection<BotInfoModel>();
             _logs = new ObservableCollection<string>();
         }
 
@@ -41,7 +41,7 @@ namespace Codesseum.Simulator.ViewModels
 
                     Logs.Add("Bot loaded");
 
-                    BotInformations.Add(new BotInfo
+                    BotInformations.Add(new BotInfoModel
                     {
                         Path = fileName,
                         TeamName = ExtractTeamName(fileName)
@@ -52,12 +52,16 @@ namespace Codesseum.Simulator.ViewModels
 
         public void RemoveBot()
         {
-            
+            var botToRemove = _botInformations.FirstOrDefault(b => b.TeamName == SelectedBot.TeamName);
+            _botInformations.Remove(botToRemove);
+
+            Logs.Add("Bot removed");
         }
 
         public void StartSimulation()
         {
-            
+            var simulator = new SimulatorWindow();
+            simulator.Show(BotInformations);
         }
 
         private bool IsAssemblyValid(string path)
@@ -92,8 +96,8 @@ namespace Codesseum.Simulator.ViewModels
 
         // Properties
 
-        private ObservableCollection<BotInfo> _botInformations;
-        public ObservableCollection<BotInfo> BotInformations
+        private ObservableCollection<BotInfoModel> _botInformations;
+        public ObservableCollection<BotInfoModel> BotInformations
         {
             get { return _botInformations; }
             set { Set(() => BotInformations, ref _botInformations, value); }
@@ -104,6 +108,13 @@ namespace Codesseum.Simulator.ViewModels
         {
             get { return _logs; }
             set { Set(() => Logs, ref _logs, value); }
+        }
+
+        private BotInfoModel _selectedBot;
+        public  BotInfoModel SelectedBot
+        {
+            get { return _selectedBot; }
+            set { Set(() => SelectedBot, ref _selectedBot, value); }
         }
     }
 }
