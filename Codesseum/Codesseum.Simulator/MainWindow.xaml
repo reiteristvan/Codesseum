@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <!-- Settings -->
@@ -24,12 +25,16 @@
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding Path=Path}" />
+                            <TextBlock Text="{Binding Path=TeamName}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <Button Command="{Binding Path=AddBotCommand}" Content="Add" />
         </StackPanel>
+        
+        <!-- Log -->
+        <ListBox ItemsSource="{Binding Path=Logs}" Grid.Row="3" />
         
         <!-- Commands -->
         <StackPanel Grid.Row="2">
