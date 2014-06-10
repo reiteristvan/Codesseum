@@ -34,7 +34,7 @@ namespace Codesseum.Common.Map
             get
             {
                 // invalid coordinate
-                if (i < 0 || i > Height || j < 0 || j > Width)
+                if (i < 0 || i >= Height || j < 0 || j >= Width)
                 {
                     return -1;
                 }

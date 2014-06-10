@@ -10,7 +10,7 @@ namespace Codesseum.Test
         {
             var engine = new Engine(new GameConfiguration
             {
-                NumberOfTurns = 1000,
+                NumberOfTurns = 10000,
                 BotPathList = new List<string> { "TestBot.dll" },
                 BotsPerTeam = 5,
                 GameType = 1,
