@@ -287,6 +287,21 @@ namespace Codesseum.Common
             get { return _map; }
         }
 
+        public List<Bot> Bots
+        {
+            get { return _bots; }
+        }
+
+        public List<Item> Items
+        {
+            get { return _items; }
+        }
+
+        public Dictionary<string, int> Points
+        {
+            get { return _points; }
+        } 
+
         private readonly GameConfiguration _configuration;
         private readonly GameMap _map;
         private readonly List<Type> _botTypes = new List<Type>(); 
