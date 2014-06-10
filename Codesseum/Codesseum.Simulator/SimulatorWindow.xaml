@@ -3,13 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SimulatorWindow" Height="600" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <Grid Grid.Row="0"></Grid>
+        <!-- Points and info panel -->
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Button Command="{Binding Path=StartCommand}"  Content="Start" />
+        </Grid>
         
-        <Button Content="Start" Grid.Row="1" Command="{Binding Path=StartCommand}" />
+        <!-- Map -->
+        <Grid Grid.Row="0" Grid.Column="1"></Grid>
     </Grid>
 </Window>
