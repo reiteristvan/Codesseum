@@ -25,7 +25,7 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => BotsPerTeam, ref _botsPerTeam, value); }
         }
 
-        private string _gameType = "";
+        private string _gameType = "0";
         public string GameType
         {
             get { return _gameType; }
