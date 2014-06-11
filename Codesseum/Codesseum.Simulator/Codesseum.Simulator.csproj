@@ -69,8 +69,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Converters\CoordinateToCanvasPositionConverter.cs" />
+    <Compile Include="Common\Converters\IsSolidToBoolConverter.cs" />
     <Compile Include="Messages\StartMessage.cs" />
     <Compile Include="Models\BotInfoModel.cs" />
+    <Compile Include="ViewModels\CellViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="SimulatorWindow.xaml.cs">
       <DependentUpon>SimulatorWindow.xaml</DependentUpon>
