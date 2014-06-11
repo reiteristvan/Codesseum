@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +18,12 @@ namespace Codesseum.Simulator.ViewModels
     {
         public SimulatorViewModel(GameConfiguration configuration)
         {
+            _cells = new ObservableCollection<CellViewModel>();
             _engine = new Engine(configuration);
 
             StartCommand = new RelayCommand(Start);
+
+            LoadMap(configuration.MapPath);
         }
 
         // Methods
@@ -27,6 +32,30 @@ namespace Codesseum.Simulator.ViewModels
         {
             _engine.Start();
         }
+
+        private void LoadMap(string path)
+        {
+            int x = 0;
+            foreach (var line in File.ReadAllLines(path))
+            {
+                int y = 0;
+                foreach (var c in line)
+                {
+                    Cells.Add(new CellViewModel(x, y, c == '1'));
+                    ++y;
+                }
+                ++x;
+            }
+        }
+
+        // Properties
+
+        private ObservableCollection<CellViewModel> _cells;
+        public ObservableCollection<CellViewModel> Cells
+        {
+            get { return _cells; }
+            set { Set(() => Cells, ref _cells, value); }
+        }  
 
         // Commands
 

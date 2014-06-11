@@ -1,8 +1,14 @@
 ﻿<Window x:Class="Codesseum.Simulator.SimulatorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:Codesseum.Simulator.Common.Converters"
         Title="SimulatorWindow" Height="600" Width="800">
     <Grid>
+        <Grid.Resources>
+            <converters:CoordinateToCanvasPositionConverter x:Key="CoordinateConverter" />
+            <converters:IsSolidToColorConverter x:Key="SolidToBoolConverter" />
+        </Grid.Resources>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -19,6 +25,27 @@
         </Grid>
         
         <!-- Map -->
-        <Grid Grid.Row="0" Grid.Column="1"></Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <ItemsControl ItemsSource="{Binding Path=Cells}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding Path=X, Converter={StaticResource CoordinateConverter}}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Path=Y, Converter={StaticResource CoordinateConverter}}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=IsSolid, Converter={StaticResource SolidToBoolConverter}}"
+                                BorderBrush="Black" BorderThickness="1"
+                                Width="20" Height="20" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </Grid>
 </Window>
