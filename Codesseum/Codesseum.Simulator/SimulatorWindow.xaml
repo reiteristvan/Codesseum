@@ -34,8 +34,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style>
-                        <Setter Property="Canvas.Left" Value="{Binding Path=X, Converter={StaticResource CoordinateConverter}}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Path=Y, Converter={StaticResource CoordinateConverter}}" />
+                        <Setter Property="Canvas.Left" Value="{Binding Path=Y, Converter={StaticResource CoordinateConverter}}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Path=X, Converter={StaticResource CoordinateConverter}}" />
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>

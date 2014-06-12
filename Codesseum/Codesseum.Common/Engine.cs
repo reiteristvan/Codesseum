@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +15,8 @@ namespace Codesseum.Common
     {
         public Engine(GameConfiguration configuration, Stream logOutput = null)
         {
+            Events = new ObservableCollection<GameEvent>();
+
             _logger = new Logger(logOutput);
             _configuration = configuration;
             _map = new GameMap(_configuration.MapPath);
@@ -281,6 +284,10 @@ namespace Codesseum.Common
 
             return type;
         }
+
+        // Properties
+
+        public ObservableCollection<GameEvent> Events { get; private set; } 
 
         public GameMap Map
         {
