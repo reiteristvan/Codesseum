@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Codesseum.Common;
-using Codesseum.Simulator.Messages;
-using Codesseum.Simulator.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 
 namespace Codesseum.Simulator.ViewModels
 {
@@ -20,6 +13,8 @@ namespace Codesseum.Simulator.ViewModels
         {
             _cells = new ObservableCollection<CellViewModel>();
             _engine = new Engine(configuration);
+
+            _engine.Events.CollectionChanged += GameEventHandler;
 
             StartCommand = new RelayCommand(Start);
 
@@ -46,6 +41,11 @@ namespace Codesseum.Simulator.ViewModels
                 }
                 ++x;
             }
+        }
+
+        private void GameEventHandler(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+
         }
 
         // Properties
