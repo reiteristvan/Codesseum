@@ -45,7 +45,20 @@ namespace Codesseum.Simulator.ViewModels
 
         private void GameEventHandler(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
+            foreach (GameEvent gameEvent in notifyCollectionChangedEventArgs.NewItems)
+            {
+                switch (gameEvent.Type)
+                {
+                    case EventType.BotAction:
+                        HandleBotAction(gameEvent.BotAction);
+                        break;
+                }
+            }
+        }
 
+        private void HandleBotAction(BotAction action)
+        {
+            
         }
 
         // Properties
