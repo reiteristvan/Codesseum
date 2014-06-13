@@ -3,6 +3,7 @@
     public class GameEvent
     {
         public EventType Type { get; set; }
+        public BotAction BotAction { get; set; }
     }
 
     public enum EventType
