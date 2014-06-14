@@ -43,6 +43,7 @@ namespace Codesseum.Common
 
                     bot.SetAttributes(bot.GetAttributes());
                     bot.Position = GetRandomBotPosition();
+                    bot.Id = Guid.NewGuid();
 
                     _bots.Add(bot);
 
@@ -50,6 +51,13 @@ namespace Codesseum.Common
                     {
                         _points.Add(bot.TeamName, 0);
                     }
+
+                    Events.Add(new GameEvent
+                    {
+                        BotId = bot.Id,
+                        Type = EventType.BotSpawn,
+                        BotAction = new BotAction { Target  = bot.Position }
+                    });
                 }
             }
 
@@ -113,6 +121,14 @@ namespace Codesseum.Common
                                     break;
                             }
                         }
+
+                        Events.Add(new GameEvent
+                        {
+                            BotAction = action,
+                            BotId = bot.Id,
+                            Type = EventType.BotAction
+                        });
+                        
                     }
                     else // attack bot on target field
                     {
@@ -277,10 +293,10 @@ namespace Codesseum.Common
         }
         private Type LoadBotTypeFromAssembly(string path)
         {
-            var absolutePath = Directory.GetCurrentDirectory() + "\\" + path;
-            var assembly = Assembly.LoadFile(absolutePath);
+            //var absolutePath = Directory.GetCurrentDirectory() + "\\" + path;
+            var assembly = Assembly.LoadFile(path);
             var type = assembly.GetTypes()
-                .FirstOrDefault(t => t.Name.Contains(Path.GetFileNameWithoutExtension(absolutePath)));
+                .FirstOrDefault(t => t.Name.Contains(Path.GetFileNameWithoutExtension(path)));
 
             return type;
         }

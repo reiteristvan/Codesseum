@@ -10,6 +10,7 @@ namespace Codesseum.Common
 
     public enum ActionType
     {
+        Spawn = 99,
         Move = 0,
         Attack = 1
     }
