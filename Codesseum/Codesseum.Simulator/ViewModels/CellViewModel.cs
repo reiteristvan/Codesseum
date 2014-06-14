@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
 
 namespace Codesseum.Simulator.ViewModels
 {
@@ -9,6 +10,7 @@ namespace Codesseum.Simulator.ViewModels
             X = x;
             Y = y;
             IsSolid = solid;
+            BotId = Guid.Empty;
         }
 
         private int _x;
@@ -31,5 +33,14 @@ namespace Codesseum.Simulator.ViewModels
             get { return _isSolid; }
             set { Set(() => IsSolid, ref _isSolid, value); }
         }
+
+        private bool _isOnBot;
+        public bool IsOnBot
+        {
+            get { return _isOnBot; }
+            set { Set(() => IsOnBot, ref _isOnBot, value); }
+        }
+
+        public Guid BotId { get; set; }
     }
 }

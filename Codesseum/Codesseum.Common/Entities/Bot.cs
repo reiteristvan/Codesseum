@@ -21,6 +21,8 @@ namespace Codesseum.Common.Entities
 
         // Properties
 
+        public Guid Id { get; internal set; }
+
         public string TeamName { get; set; }
 
         public int Health { get; internal set; }

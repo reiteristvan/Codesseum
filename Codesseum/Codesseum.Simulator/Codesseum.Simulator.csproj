@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\CoordinateToCanvasPositionConverter.cs" />
     <Compile Include="Common\Converters\IsSolidToBoolConverter.cs" />
     <Compile Include="Messages\StartMessage.cs" />
