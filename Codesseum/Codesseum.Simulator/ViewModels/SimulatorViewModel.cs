@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Codesseum.Common;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;

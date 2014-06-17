@@ -19,11 +19,11 @@ namespace Codesseum.TestBot
 
             if (random.Next(1000)%2 == 0)
             {
-                target = new Coordinate(Position.X + random.Next(Range), Position.Y);
+                target = new Coordinate(Position.X + 5, Position.Y);
             }
             else
             {
-                target = new Coordinate(Position.X, Position.Y + random.Next(Range));
+                target = new Coordinate(Position.X, Position.Y + 5);
             }
 
             return new BotAction
