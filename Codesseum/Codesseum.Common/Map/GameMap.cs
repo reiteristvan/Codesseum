@@ -17,9 +17,9 @@ namespace Codesseum.Common.Map
             Width = lines[0].Length;
             Height = lines.Length;
 
-            for (int i = 0; i < lines.Length; ++i)
+            for (int i = 0; i < Height; ++i)
             {
-                for (int j = 0; j < lines[0].Length; ++j)
+                for (int j = 0; j < Width; ++j)
                 {
                     _map[i, j] = int.Parse(lines[i][j].ToString());
                 }
@@ -29,17 +29,17 @@ namespace Codesseum.Common.Map
         public int Width { get; internal set; }
         public int Height { get; internal set; }
 
-        public int this[int i, int j]
+        public int this[int x, int y]
         {
             get
             {
                 // invalid coordinate
-                if (i < 0 || i >= Height || j < 0 || j >= Width)
+                if (x < 0 || x >= Height || y < 0 || y >= Width)
                 {
                     return -1;
                 }
 
-                return _map[i, j];
+                return _map[x, y];
             }
         }
 

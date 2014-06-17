@@ -44,6 +44,7 @@ namespace Codesseum.Common
                     bot.SetAttributes(bot.GetAttributes());
                     bot.Position = GetRandomBotPosition();
                     bot.Id = Guid.NewGuid();
+                    bot.IsDead = false;
 
                     _bots.Add(bot);
 
@@ -212,9 +213,9 @@ namespace Codesseum.Common
             int step = lhs.Y > rhs.Y ? -1 : 1;
             int i = lhs.Y + step;
             
-            while (i == rhs.Y)
+            while (i != rhs.Y)
             {
-                if (_map[lhs.X, i] == -1)
+                if (_map[lhs.X, i] == 1)
                 {
                     return true;
                 }
@@ -231,7 +232,7 @@ namespace Codesseum.Common
             int step = lhs.X > rhs.X ? -1 : 1;
             int i = lhs.X + step;
 
-            while (i == rhs.X)
+            while (i != rhs.X)
             {
                 if (_map[i, lhs.Y] == 1)
                 {
@@ -293,7 +294,6 @@ namespace Codesseum.Common
         }
         private Type LoadBotTypeFromAssembly(string path)
         {
-            //var absolutePath = Directory.GetCurrentDirectory() + "\\" + path;
             var assembly = Assembly.LoadFile(path);
             var type = assembly.GetTypes()
                 .FirstOrDefault(t => t.Name.Contains(Path.GetFileNameWithoutExtension(path)));
