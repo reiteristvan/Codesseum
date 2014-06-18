@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Codesseum.Common.Entities;
 using Codesseum.Common.Log;
 using Codesseum.Common.Types;
@@ -164,6 +165,7 @@ namespace Codesseum.Common
                 }
 
                 ++turn;
+                Thread.Sleep(_configuration.Speed);
             }
         }
 

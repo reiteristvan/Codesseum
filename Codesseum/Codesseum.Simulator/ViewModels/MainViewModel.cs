@@ -81,7 +81,8 @@ namespace Codesseum.Simulator.ViewModels
                 BotsPerTeam = int.Parse(Configuration.BotsPerTeam),
                 GameType = int.Parse(Configuration.GameType),
                 MapPath = Configuration.MapPath,
-                NumberOfTurns = int.Parse(Configuration.NumberOfTurns)
+                NumberOfTurns = int.Parse(Configuration.NumberOfTurns),
+                Speed = int.Parse(Configuration.Speed)
             });
         }
 
