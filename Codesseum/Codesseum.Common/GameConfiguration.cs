@@ -9,5 +9,6 @@ namespace Codesseum.Common
         public int NumberOfTurns { get; set; }
         public int BotsPerTeam { get; set; }
         public int GameType { get; set; }
+        public int Speed { get; set; }
     }
 }

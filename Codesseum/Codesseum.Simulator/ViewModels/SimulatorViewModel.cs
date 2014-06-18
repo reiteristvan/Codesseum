@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Threading;
+using System.Threading.Tasks;
 using Codesseum.Common;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;
@@ -29,7 +29,9 @@ namespace Codesseum.Simulator.ViewModels
 
         private void Start()
         {
-            _engine.Start();
+            Task.Run(() => _engine.Start());
+
+            //_engine.Start();
         }
 
         private void LoadMap(string path)

@@ -31,5 +31,13 @@ namespace Codesseum.Simulator.ViewModels
             get { return _gameType; }
             set { Set(() => GameType, ref _gameType, value); }
         }
+
+        private string _speed = "100";
+
+        public string Speed
+        {
+            get { return _speed; }
+            set { Set(() => Speed, ref _speed, value); }
+        }
     }
 }
