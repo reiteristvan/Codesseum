@@ -35,6 +35,10 @@
             </ListView>
             
             <Button Command="{Binding Path=StartCommand}"  Content="Start" />
+            
+            <!-- Log -->
+            <ListBox ItemsSource="{Binding Path=Log}" 
+                     Height="300" ScrollViewer.VerticalScrollBarVisibility="Visible" />
         </StackPanel>
         
         <!-- Map -->

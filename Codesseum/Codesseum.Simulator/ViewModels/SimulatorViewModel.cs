@@ -18,6 +18,7 @@ namespace Codesseum.Simulator.ViewModels
 
         public SimulatorViewModel(GameConfiguration configuration)
         {
+            _log = new ObservableCollection<string>();
             _cells = new ObservableCollection<CellViewModel>();
             _engine = new Engine(configuration);
 
@@ -28,10 +29,10 @@ namespace Codesseum.Simulator.ViewModels
             LoadMap(configuration.MapPath);
 
             BindingOperations.EnableCollectionSynchronization(_engine.Points, _lock);
+            BindingOperations.EnableCollectionSynchronization(Log, _lock);
         }
 
         // Methods
-
         private void Start()
         {
             Task.Run(() => _engine.Start());
@@ -91,6 +92,8 @@ namespace Codesseum.Simulator.ViewModels
 
         private void MoveBot(Guid botId, Coordinate to)
         {
+            Log.Add(string.Format("Move to {0}:{1}", to.X, to.Y));
+
             var source = Cells.FirstOrDefault(c => c.BotId == botId);
             source.IsOnBot = false;
             source.BotId = Guid.Empty;
@@ -111,7 +114,13 @@ namespace Codesseum.Simulator.ViewModels
         {
             get { return _cells; }
             set { Set(() => Cells, ref _cells, value); }
-        }  
+        }
+
+        private ObservableCollection<string> _log; 
+        public ObservableCollection<string> Log
+        {
+            get { return _log; }
+        }
 
         // Commands
 
