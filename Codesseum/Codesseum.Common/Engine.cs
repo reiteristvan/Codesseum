@@ -213,7 +213,7 @@ namespace Codesseum.Common
             
             while (i != rhs.Y)
             {
-                if (_map[lhs.X, i] == 1)
+                if (_map[lhs.X, i] != 0)
                 {
                     return true;
                 }
@@ -232,7 +232,7 @@ namespace Codesseum.Common
 
             while (i != rhs.X)
             {
-                if (_map[i, lhs.Y] == 1)
+                if (_map[i, lhs.Y] != 0)
                 {
                     return true;
                 }
