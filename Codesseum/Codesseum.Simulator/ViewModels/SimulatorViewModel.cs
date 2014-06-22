@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using Codesseum.Common;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;
@@ -13,6 +14,8 @@ namespace Codesseum.Simulator.ViewModels
 {
     public class SimulatorViewModel : ViewModelBase
     {
+        private object _lock = new object();
+
         public SimulatorViewModel(GameConfiguration configuration)
         {
             _cells = new ObservableCollection<CellViewModel>();
@@ -23,6 +26,8 @@ namespace Codesseum.Simulator.ViewModels
             StartCommand = new RelayCommand(Start);
 
             LoadMap(configuration.MapPath);
+
+            BindingOperations.EnableCollectionSynchronization(_engine.Points, _lock);
         }
 
         // Methods
@@ -96,6 +101,10 @@ namespace Codesseum.Simulator.ViewModels
         }
 
         // Properties
+        public Engine Engine
+        {
+            get { return _engine; }
+        }
 
         private ObservableCollection<CellViewModel> _cells;
         public ObservableCollection<CellViewModel> Cells
