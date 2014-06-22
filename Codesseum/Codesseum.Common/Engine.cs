@@ -49,11 +49,6 @@ namespace Codesseum.Common
 
                     _bots.Add(bot);
 
-                    if (_points.All(b => b.Key != bot.TeamName))
-                    {
-                        _points.Add(new Pair(bot.TeamName, 0));
-                    }
-
                     Events.Add(new GameEvent
                     {
                         BotId = bot.Id,
@@ -290,6 +285,13 @@ namespace Codesseum.Common
                 if (botType == null)
                 {
                     throw new ArgumentException("Couldn't find type!");
+                }
+
+                var bot = (Bot) Activator.CreateInstance(botType);
+
+                if (_points.All(b => b.Key != bot.TeamName))
+                {
+                    _points.Add(new Pair(bot.TeamName, 0));
                 }
 
                 _botTypes.Add(botType);
