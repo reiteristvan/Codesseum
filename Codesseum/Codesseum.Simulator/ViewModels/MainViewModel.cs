@@ -18,7 +18,7 @@ namespace Codesseum.Simulator.ViewModels
         {
             AddMapCommand = new RelayCommand(AddMap);
             AddBotCommand = new RelayCommand(AddBot);
-            RemoveBotCommand = new RelayCommand(RemoveBot);
+            RemoveBotCommand = new RelayCommand(RemoveBot, () => SelectedBot != null);
             StartSimulationCommand = new RelayCommand(StartSimulation);
 
             _botInformations = new ObservableCollection<BotInfoModel>();
