@@ -49,9 +49,9 @@ namespace Codesseum.Common
 
                     _bots.Add(bot);
 
-                    if (!_points.ContainsKey(bot.TeamName))
+                    if (_points.All(b => b.Key != bot.TeamName))
                     {
-                        _points.Add(bot.TeamName, 0);
+                        _points.Add(new Pair(bot.TeamName, 0));
                     }
 
                     Events.Add(new GameEvent
@@ -158,7 +158,8 @@ namespace Codesseum.Common
 
                         if (botOnCoordinate.Health <= 0)
                         {
-                            _points[bot.TeamName] += 1;
+                            var team = _points.First(b => b.Key == bot.TeamName);
+                            team.Value += 1;
                             botOnCoordinate.IsDead = true;
                         }
                     }
@@ -322,7 +323,7 @@ namespace Codesseum.Common
             get { return _items; }
         }
 
-        public Dictionary<string, int> Points
+        public ObservableCollection<Pair> Points
         {
             get { return _points; }
         } 
@@ -332,7 +333,7 @@ namespace Codesseum.Common
         private readonly List<Type> _botTypes = new List<Type>(); 
         private readonly List<Bot> _bots = new List<Bot>();
         private readonly List<Item> _items = new List<Item>(); 
-        private readonly Dictionary<string, int> _points = new Dictionary<string, int>();
+        private readonly ObservableCollection<Pair> _points = new ObservableCollection<Pair>();
         private readonly Logger _logger;
     }
 }

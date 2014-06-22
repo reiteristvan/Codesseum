@@ -53,6 +53,7 @@
     <Compile Include="Map\GameMap.cs" />
     <Compile Include="BotAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Pair.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
