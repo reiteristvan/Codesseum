@@ -14,7 +14,7 @@ namespace Codesseum.Simulator.ViewModels
 {
     public class SimulatorViewModel : ViewModelBase
     {
-        private object _lock = new object();
+        private readonly object _lock = new object();
 
         public SimulatorViewModel(GameConfiguration configuration)
         {
