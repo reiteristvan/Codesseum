@@ -39,6 +39,12 @@ namespace Codesseum.Common.Map
                     return -1;
                 }
 
+                // wall
+                if (_map[x, y] == 1)
+                {
+                    return -1;
+                }
+
                 return _map[x, y];
             }
         }

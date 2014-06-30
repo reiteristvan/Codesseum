@@ -15,7 +15,7 @@ namespace Codesseum.TestBot
         public override BotAction NextAction(World world)
         {
             var random = new Random();
-            Coordinate target = null;
+            Coordinate target;
 
             if (random.Next(1000)%2 == 0)
             {
