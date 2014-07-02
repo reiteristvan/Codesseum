@@ -41,6 +41,14 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => IsOnBot, ref _isOnBot, value); }
         }
 
+        private bool _isOnItem;
+
+        public bool IsOnItem
+        {
+            get { return _isOnItem; }
+            set { Set(() => IsOnItem, ref _isOnItem, value); }
+        }
+
         private bool _isAttacker = false;
         public bool IsAttacker
         {

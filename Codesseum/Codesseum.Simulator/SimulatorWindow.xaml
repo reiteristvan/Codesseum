@@ -97,8 +97,12 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Foreground="Red" Text="B" 
+                            <Grid>
+                                <TextBlock Foreground="Red" Text="B" 
                                        Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <TextBlock Foreground="Gold" Text="I"
+                                       Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
