@@ -1,17 +1,17 @@
 ﻿@model Codesseum.Web.Areas.Beta.Models.SubscribeModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Subscribe to Beta testing";
 }
 
-<h2>Codesseum.NET Beta feliratkozás</h2>
+<h2>Feliratkozás a béta tesztre</h2>
+
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,4 +35,8 @@
             </div>
         </div>
     </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
