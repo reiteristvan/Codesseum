@@ -12,7 +12,7 @@ namespace Codesseum.TestBot
             TeamName = "almabeka";
         }
 
-        public override BotAction NextAction(World world)
+        public override BotAction NextAction()
         {
             var random = new Random();
             Coordinate target;

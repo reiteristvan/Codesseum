@@ -98,9 +98,9 @@
                                 </Style>
                             </Border.Style>
                             <Grid>
-                                <TextBlock Foreground="Red" Text="B" 
+                                <TextBlock Foreground="Red" Text="B" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <TextBlock Foreground="Gold" Text="I"
+                                <TextBlock Foreground="Gold" Text="I" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
                         </Border>
