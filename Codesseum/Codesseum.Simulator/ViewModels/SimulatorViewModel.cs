@@ -154,7 +154,7 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => Cells, ref _cells, value); }
         }
 
-        private ObservableCollection<string> _log; 
+        private readonly ObservableCollection<string> _log; 
         public ObservableCollection<string> Log
         {
             get { return _log; }

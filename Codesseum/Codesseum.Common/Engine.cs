@@ -67,8 +67,11 @@ namespace Codesseum.Common
                 foreach (var deadBot in _bots.Where(b => b.IsDead))
                 {
                     deadBot.IsDead = false;
-                    deadBot.SetAttributes(deadBot.GetAttributes());
                     deadBot.Position = GetRandomBotPosition();
+
+                    World.Current = CreateWorldInfo();
+
+                    deadBot.SetAttributes(deadBot.GetAttributes());
 
                     _logger.Log(string.Format("{0}@{1} respawned at {2}", 
                         deadBot.TeamName, deadBot.Id, deadBot.Position));
@@ -82,7 +85,9 @@ namespace Codesseum.Common
                 {
                     if (bot.IsDead) { continue; }
 
-                    var action = bot.NextAction(CreateWorldInfo());
+                    World.Current = CreateWorldInfo();
+
+                    var action = bot.NextAction();
 
                     // invalid move either case, no need to refresh world info as nothing changed
                     if (_map[action.Target] == -1 || 

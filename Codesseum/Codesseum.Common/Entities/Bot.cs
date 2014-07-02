@@ -43,7 +43,7 @@ namespace Codesseum.Common.Entities
         /// </summary>
         /// <returns>Array of attribute values in order: Health, Power, Defense, Speed</returns>
         public abstract int[] GetAttributes();
-        public abstract BotAction NextAction(World world);
+        public abstract BotAction NextAction();
 
         internal void SetAttributes(int[] values)
         {
