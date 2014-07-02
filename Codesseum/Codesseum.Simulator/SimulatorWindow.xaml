@@ -60,50 +60,6 @@
                                 Value="{Binding Path=Y, Converter={StaticResource CoordinateConverter}}" />
                         <Setter Property="Canvas.Top" 
                                 Value="{Binding Path=X, Converter={StaticResource CoordinateConverter}}" />
-                        
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsAttacker}" Value="True">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="Background.Color"
-                                                            To="{StaticResource AttackerColor}" 
-                                                            Duration="0:0:1" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
-                                <DataTrigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="{Binding Path=IsAttacker}" FillBehavior="HoldEnd">
-                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:1" />
-                                            </BooleanAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.ExitActions>
-                            </DataTrigger>
-                            
-                            <DataTrigger Binding="{Binding Path=IsAttacked}" Value="True">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetProperty="Background.Color" 
-                                                            To="{StaticResource AttackedColor}" 
-                                                            Duration="0:0:1" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
-                                <DataTrigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="{Binding Path=IsAttacked}" FillBehavior="HoldEnd">
-                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:1" />
-                                            </BooleanAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.ExitActions>
-                            </DataTrigger>
-                        </Style.Triggers>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 
@@ -112,6 +68,35 @@
                         <Border Background="{Binding Path=IsSolid, Converter={StaticResource SolidToBoolConverter}}"
                                 BorderBrush="Black" BorderThickness="1"
                                 Width="20" Height="20">
+                            <Border.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsAttacker}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                    To="{StaticResource AttackerColor}" AutoReverse="True"
+                                                                    Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                
+                                        <DataTrigger Binding="{Binding Path=IsAttacked}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                                    To="{StaticResource AttackedColor}" AutoReverse="True"
+                                                                    Duration="0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                             <TextBlock Foreground="Red" Text="B" 
                                        Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Border>

@@ -101,19 +101,25 @@ namespace Codesseum.Simulator.ViewModels
             var source = Cells.FirstOrDefault(c => c.BotId == botId);
             source.IsOnBot = false;
             source.BotId = Guid.Empty;
+            source.IsAttacker = true;
+            //source.IsAttacker = false;
 
             var target = Cells.FirstOrDefault(c => c.X == to.X && c.Y == to.Y);
             target.IsOnBot = true;
             target.BotId = botId;
+            target.IsAttacked = true;
+            //target.IsAttacked = false;
         }
 
         private void AttackBot(Guid botId, Coordinate target)
         {
             var sourceCell = Cells.FirstOrDefault(b => b.BotId == botId);
             sourceCell.IsAttacker = true; // trigger animation
+            sourceCell.IsAttacker = false;
 
             var targetCell = Cells.FirstOrDefault(c => c.X == target.X && c.Y == target.Y);
             targetCell.IsAttacked = true; // trigger animation
+            sourceCell.IsAttacked = false;
         }
 
         private void HandleGameOver()
