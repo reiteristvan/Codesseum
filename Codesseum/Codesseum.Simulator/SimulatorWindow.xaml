@@ -5,6 +5,9 @@
         Title="SimulatorWindow" Height="600" Width="1000">
     <Grid>
         <Grid.Resources>
+            <Color x:Key="AttackerColor">DodgerBlue</Color>
+            <Color x:Key="AttackedColor">Red</Color>
+            
             <converters:CoordinateToCanvasPositionConverter x:Key="CoordinateConverter" />
             <converters:IsSolidToColorConverter x:Key="SolidToBoolConverter" />
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -44,19 +47,66 @@
         <!-- Map -->
         <Grid Grid.Row="0" Grid.Column="1">
             <ItemsControl ItemsSource="{Binding Path=Cells}">
+                
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                
                 <ItemsControl.ItemContainerStyle>
                     <Style>
                         <Setter Property="Canvas.Left" 
                                 Value="{Binding Path=Y, Converter={StaticResource CoordinateConverter}}" />
                         <Setter Property="Canvas.Top" 
                                 Value="{Binding Path=X, Converter={StaticResource CoordinateConverter}}" />
+                        
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsAttacker}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                                            To="{StaticResource AttackerColor}" 
+                                                            Duration="0:0:1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="{Binding Path=IsAttacker}" FillBehavior="HoldEnd">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:1" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                            
+                            <DataTrigger Binding="{Binding Path=IsAttacked}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="Background.Color" 
+                                                            To="{StaticResource AttackedColor}" 
+                                                            Duration="0:0:1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="{Binding Path=IsAttacked}" FillBehavior="HoldEnd">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:1" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
+                
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Background="{Binding Path=IsSolid, Converter={StaticResource SolidToBoolConverter}}"
@@ -67,6 +117,7 @@
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                
             </ItemsControl>
         </Grid>
     </Grid>

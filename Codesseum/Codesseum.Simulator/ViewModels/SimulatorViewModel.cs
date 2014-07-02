@@ -22,9 +22,10 @@ namespace Codesseum.Simulator.ViewModels
             _cells = new ObservableCollection<CellViewModel>();
             _engine = new Engine(configuration);
 
+            // game event handler
             _engine.Events.CollectionChanged += GameEventHandler;
 
-            StartCommand = new RelayCommand(Start);
+            StartCommand = new RelayCommand(Start, () => _isEngineRuns == false);
 
             LoadMap(configuration.MapPath);
 
@@ -35,9 +36,8 @@ namespace Codesseum.Simulator.ViewModels
         // Methods
         private void Start()
         {
+            _isEngineRuns = true;
             Task.Run(() => _engine.Start());
-
-            //_engine.Start();
         }
 
         private void LoadMap(string path)
@@ -67,6 +67,9 @@ namespace Codesseum.Simulator.ViewModels
                     case EventType.BotAction:
                         HandleBotAction(gameEvent.BotId, gameEvent.BotAction);
                         break;
+                    case EventType.EndOfGame:
+                        HandleGameOver();
+                        break;
                 }
             }
         }
@@ -86,6 +89,7 @@ namespace Codesseum.Simulator.ViewModels
                     MoveBot(botId, action.Target);
                     break;
                 case ActionType.Attack:
+                    AttackBot(botId, action.Target);
                     break;
             }
         }
@@ -101,6 +105,20 @@ namespace Codesseum.Simulator.ViewModels
             var target = Cells.FirstOrDefault(c => c.X == to.X && c.Y == to.Y);
             target.IsOnBot = true;
             target.BotId = botId;
+        }
+
+        private void AttackBot(Guid botId, Coordinate target)
+        {
+            var sourceCell = Cells.FirstOrDefault(b => b.BotId == botId);
+            sourceCell.IsAttacker = true; // trigger animation
+
+            var targetCell = Cells.FirstOrDefault(c => c.X == target.X && c.Y == target.Y);
+            targetCell.IsAttacked = true; // trigger animation
+        }
+
+        private void HandleGameOver()
+        {
+            
         }
 
         // Properties
@@ -129,5 +147,6 @@ namespace Codesseum.Simulator.ViewModels
         // Fields
 
         private readonly Engine _engine;
+        private bool _isEngineRuns = false;
     }
 }

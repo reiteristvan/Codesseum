@@ -12,6 +12,8 @@ namespace Codesseum.Common
     public enum EventType
     {
         BotSpawn = 0,
-        BotAction = 1
+        BotAction = 1,
+        ItemSpawn = 2,
+        EndOfGame = 99
     }
 }

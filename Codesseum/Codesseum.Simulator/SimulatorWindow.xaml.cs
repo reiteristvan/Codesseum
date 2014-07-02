@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using Codesseum.Common;
-using Codesseum.Simulator.Messages;
-using Codesseum.Simulator.Models;
+﻿using Codesseum.Common;
 using Codesseum.Simulator.ViewModels;
-using GalaSoft.MvvmLight.Messaging;
 
 namespace Codesseum.Simulator
 {
