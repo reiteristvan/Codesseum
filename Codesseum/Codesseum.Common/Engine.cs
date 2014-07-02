@@ -139,15 +139,14 @@ namespace Codesseum.Common
 
                         // check if bot is in range
                         if (Math.Abs(action.Target.X - bot.Position.X) > bot.Range ||
-                            Math.Abs(action.Target.Y - bot.Position.Y) > bot.Range
-                            )
+                            Math.Abs(action.Target.Y - bot.Position.Y) > bot.Range)
                         {
                             continue;
                         }
 
                         // attack
 
-                        var damage = bot.Power - (botOnCoordinate.Defense/2);
+                        var damage = bot.Power - (botOnCoordinate.Defense / 2);
                         --bot.Ammunition;
                         botOnCoordinate.Health -= damage;
 
@@ -162,6 +161,22 @@ namespace Codesseum.Common
 
                 ++turn;
                 Thread.Sleep(_configuration.Speed);
+            }
+
+            Events.Add(new GameEvent
+            {
+                Type = EventType.EndOfGame
+            });
+        }
+
+        public void Reset()
+        {
+            _bots.Clear();
+            _items.Clear();
+
+            foreach (var team in _points)
+            {
+                team.Value = 0;
             }
         }
 
