@@ -67,6 +67,10 @@ namespace Codesseum.Simulator.ViewModels
                     case EventType.BotAction:
                         HandleBotAction(gameEvent.BotId, gameEvent.BotAction);
                         break;
+                    case EventType.BotDead:
+                        break;
+                    case EventType.ItemSpawn:
+                        break;
                     case EventType.EndOfGame:
                         HandleGameOver();
                         break;
@@ -101,24 +105,24 @@ namespace Codesseum.Simulator.ViewModels
             var source = Cells.FirstOrDefault(c => c.BotId == botId);
             source.IsOnBot = false;
             source.BotId = Guid.Empty;
-            source.IsAttacker = true;
-            //source.IsAttacker = false;
 
             var target = Cells.FirstOrDefault(c => c.X == to.X && c.Y == to.Y);
             target.IsOnBot = true;
             target.BotId = botId;
-            target.IsAttacked = true;
-            //target.IsAttacked = false;
         }
 
         private void AttackBot(Guid botId, Coordinate target)
         {
             var sourceCell = Cells.FirstOrDefault(b => b.BotId == botId);
-            sourceCell.IsAttacker = true; // trigger animation
+
+            // trigger and reverse animation
+            sourceCell.IsAttacker = true;
             sourceCell.IsAttacker = false;
 
             var targetCell = Cells.FirstOrDefault(c => c.X == target.X && c.Y == target.Y);
-            targetCell.IsAttacked = true; // trigger animation
+
+            // trigger and reverse animation
+            targetCell.IsAttacked = true;
             sourceCell.IsAttacked = false;
         }
 
