@@ -11,12 +11,12 @@ namespace Codesseum.Test
         {
             var engine = new Engine(new GameConfiguration
             {
-                NumberOfTurns = 1000,
+                NumberOfTurns = 50,
                 BotPathList = new List<string> { Directory.GetCurrentDirectory() + "\\TestBot.dll" },
                 BotsPerTeam = 5,
                 GameType = 1,
                 MapPath = "testMap.txt",
-                Speed = 100
+                Speed = 10
             }, Console.OpenStandardOutput());
 
             engine.Start();

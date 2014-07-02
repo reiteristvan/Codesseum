@@ -94,6 +94,7 @@ namespace Codesseum.Common
                         !IsTwoCoordinateInLine(bot.Position, action.Target) ||
                         IsThereBlockBetweenCoordinates(bot.Position, action.Target))
                     {
+                        _logger.Log(string.Format("{0}@{1} made an invalid move", bot.TeamName, bot.Id));
                         continue;
                     }
 
@@ -105,6 +106,7 @@ namespace Codesseum.Common
                         // cell already taken, invalid move
                         if (botOnCoordinate != null)
                         {
+                            _logger.Log(string.Format("{0}@{1} cannot step on taken cell", bot.TeamName, bot.Id));
                             continue;
                         }
 
@@ -303,8 +305,8 @@ namespace Codesseum.Common
             var random = new Random();
             for (int i = 0; i < 5 - _items.Count; ++i)
             {
-                bool l = false;
-                while (!l)
+                bool success = false;
+                while (!success)
                 {
                     var c = Coordinate.CreateRandom(_map.Width, _map.Height, random);
                     var botOnCoordinate = _bots.FirstOrDefault(b => b.Position.Equals(c));
@@ -316,7 +318,7 @@ namespace Codesseum.Common
                                 (ItemType) random.Next(4),
                                 random.Next(4),
                                 (PowerUpType) random.Next(4)));
-                        l = true;
+                        success = true;
 
                         Events.Add(new GameEvent
                         {
