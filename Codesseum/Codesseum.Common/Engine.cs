@@ -69,6 +69,8 @@ namespace Codesseum.Common
                     deadBot.IsDead = false;
                     deadBot.SetAttributes(deadBot.GetAttributes());
                     deadBot.Position = GetRandomBotPosition();
+
+                    _logger.Log(string.Format("{0}@{1} respawned at {2}", deadBot.TeamName, deadBot.Id, deadBot.Position));
                 }
 
                 // initialize items
@@ -81,7 +83,7 @@ namespace Codesseum.Common
 
                     var action = bot.NextAction(CreateWorldInfo());
 
-                    // invalid move either case, no need to refresh world info
+                    // invalid move either case, no need to refresh world info as nothing changed
                     if (_map[action.Target] == -1 || 
                         !IsTwoCoordinateInLine(bot.Position, action.Target) ||
                         IsThereBlockBetweenCoordinates(bot.Position, action.Target))
@@ -89,11 +91,12 @@ namespace Codesseum.Common
                         continue;
                     }
 
+                    var source = new Coordinate(bot.Position.X, bot.Position.Y);
                     var botOnCoordinate = _bots.FirstOrDefault(b => b.Position.Equals(action.Target));
 
                     if (action.Action == ActionType.Move)
                     {
-                        // cell already taken
+                        // cell already taken, invalid move
                         if (botOnCoordinate != null)
                         {
                             continue;
@@ -110,14 +113,31 @@ namespace Codesseum.Common
                             {
                                 case ItemType.Ammunition:
                                     bot.Ammunition += item.Value;
+                                    _logger.Log(string.Format("{0}@{1} taken ammunition", bot.TeamName, bot.Id));
                                     break;
                                 case ItemType.MediPack:
                                     bot.Health += item.Value;
+                                    _logger.Log(string.Format("{0}@{1} taken a medipack", bot.TeamName, bot.Id));
                                     break;
                                 case ItemType.PowerUp:
                                     break;
+                                case ItemType.Special: // treasure hunt mode
+                                    var team = _points.First(b => b.Key == bot.TeamName);
+                                    team.Value += item.Value;
+                                    _logger.Log(string.Format("{0}@{1} taken a treasure and gain {2} points", bot.TeamName, bot.Id, item.Value));
+                                    break;
                             }
+
+                            _items.Remove(item);
+
+                            Events.Add(new GameEvent
+                            {
+                                Type = EventType.ItemTaken,
+                                Position = item.Position
+                            });
                         }
+
+                        _logger.Log(string.Format("{0}@{1} moved from {2} to {3}", bot.TeamName, bot.Id, source, action.Target));
 
                         Events.Add(new GameEvent
                         {
@@ -150,11 +170,22 @@ namespace Codesseum.Common
                         --bot.Ammunition;
                         botOnCoordinate.Health -= damage;
 
+                        _logger.Log(string.Format("{0}@{1} attacked {2}@{3} with damage: {4}", 
+                            bot.TeamName, bot.Id, botOnCoordinate.TeamName, botOnCoordinate.Id, damage));
+
                         if (botOnCoordinate.Health <= 0)
                         {
                             var team = _points.First(b => b.Key == bot.TeamName);
                             team.Value += 1;
                             botOnCoordinate.IsDead = true;
+
+                            _logger.Log(string.Format("{0}@{1} has died", botOnCoordinate.TeamName, botOnCoordinate.Id));
+
+                            Events.Add(new GameEvent
+                            {
+                                Type = EventType.BotDead,
+                                BotId = botOnCoordinate.Id
+                            });
                         }
                     }
                 }
@@ -271,11 +302,20 @@ namespace Codesseum.Common
                     if (_map[c] != 1)
                     {
                         _items.Add(
-                            new Item(c, 
-                                    (ItemType)random.Next(4), 
-                                    random.Next(4), 
-                                    (PowerUpType)random.Next(4)));
+                            new Item(c,
+                                (ItemType) random.Next(4),
+                                random.Next(4),
+                                (PowerUpType) random.Next(4)));
                         l = true;
+
+                        Events.Add(new GameEvent
+                        {
+                            Type = EventType.ItemSpawn,
+                            BotAction = new BotAction
+                            {
+                                Target = c
+                            }
+                        });
                     }
                 }
             }

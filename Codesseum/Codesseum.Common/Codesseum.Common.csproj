@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Entities\Bot.cs" />
     <Compile Include="GameEvent.cs" />
+    <Compile Include="GameType.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Types\Coordinate.cs" />
     <Compile Include="Engine.cs" />
