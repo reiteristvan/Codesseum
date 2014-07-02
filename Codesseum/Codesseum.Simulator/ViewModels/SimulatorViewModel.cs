@@ -70,12 +70,22 @@ namespace Codesseum.Simulator.ViewModels
                     case EventType.BotDead:
                         break;
                     case EventType.ItemSpawn:
+                        HandleItemSpawn(gameEvent.Position, true);
+                        break;
+                    case EventType.ItemTaken:
+                        HandleItemSpawn(gameEvent.Position, false);
                         break;
                     case EventType.EndOfGame:
                         HandleGameOver();
                         break;
                 }
             }
+        }
+
+        private void HandleItemSpawn(Coordinate position, bool onPlace)
+        {
+            var cell = Cells.First(c => c.X == position.X && c.Y == position.Y);
+            cell.IsOnItem = onPlace;
         }
 
         private void HandleSpawnBot(Guid botId, Coordinate position)
@@ -128,7 +138,7 @@ namespace Codesseum.Simulator.ViewModels
 
         private void HandleGameOver()
         {
-            
+            _engine.Reset();   
         }
 
         // Properties

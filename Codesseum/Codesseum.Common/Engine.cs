@@ -70,7 +70,8 @@ namespace Codesseum.Common
                     deadBot.SetAttributes(deadBot.GetAttributes());
                     deadBot.Position = GetRandomBotPosition();
 
-                    _logger.Log(string.Format("{0}@{1} respawned at {2}", deadBot.TeamName, deadBot.Id, deadBot.Position));
+                    _logger.Log(string.Format("{0}@{1} respawned at {2}", 
+                        deadBot.TeamName, deadBot.Id, deadBot.Position));
                 }
 
                 // initialize items
@@ -124,7 +125,8 @@ namespace Codesseum.Common
                                 case ItemType.Special: // treasure hunt mode
                                     var team = _points.First(b => b.Key == bot.TeamName);
                                     team.Value += item.Value;
-                                    _logger.Log(string.Format("{0}@{1} taken a treasure and gain {2} points", bot.TeamName, bot.Id, item.Value));
+                                    _logger.Log(string.Format("{0}@{1} taken a treasure and gain {2} points", 
+                                        bot.TeamName, bot.Id, item.Value));
                                     break;
                             }
 
@@ -137,7 +139,8 @@ namespace Codesseum.Common
                             });
                         }
 
-                        _logger.Log(string.Format("{0}@{1} moved from {2} to {3}", bot.TeamName, bot.Id, source, action.Target));
+                        _logger.Log(string.Format("{0}@{1} moved from {2} to {3}", 
+                            bot.TeamName, bot.Id, source, action.Target));
 
                         Events.Add(new GameEvent
                         {
@@ -179,7 +182,8 @@ namespace Codesseum.Common
                             team.Value += 1;
                             botOnCoordinate.IsDead = true;
 
-                            _logger.Log(string.Format("{0}@{1} has died", botOnCoordinate.TeamName, botOnCoordinate.Id));
+                            _logger.Log(string.Format("{0}@{1} has died", 
+                                botOnCoordinate.TeamName, botOnCoordinate.Id));
 
                             Events.Add(new GameEvent
                             {
@@ -298,8 +302,9 @@ namespace Codesseum.Common
                 while (!l)
                 {
                     var c = Coordinate.CreateRandom(_map.Width, _map.Height, random);
+                    var botOnCoordinate = _bots.FirstOrDefault(b => b.Position.Equals(c));
 
-                    if (_map[c] != 1)
+                    if (_map[c] != -1 && botOnCoordinate == null)
                     {
                         _items.Add(
                             new Item(c,
@@ -311,10 +316,7 @@ namespace Codesseum.Common
                         Events.Add(new GameEvent
                         {
                             Type = EventType.ItemSpawn,
-                            BotAction = new BotAction
-                            {
-                                Target = c
-                            }
+                            Position = c
                         });
                     }
                 }
