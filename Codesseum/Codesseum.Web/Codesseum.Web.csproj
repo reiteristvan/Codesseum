@@ -213,6 +213,7 @@
     <Content Include="Areas\Beta\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Beta\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Beta\Views\Subscribe\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\SmarterASP - Codesseum.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
