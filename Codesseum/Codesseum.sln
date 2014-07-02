@@ -11,9 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBot", "Codesseum.TestBo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codesseum.Simulator", "Codesseum.Simulator\Codesseum.Simulator.csproj", "{FBC7855F-D6FF-450A-BEDB-DF7FF24A2D6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codesseum.Web", "Codesseum.Web\Codesseum.Web.csproj", "{77742FF9-0ED4-42CB-8569-B3EF1D0E9F0A}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://reiteristvan.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -29,6 +31,9 @@ Global
 		SccProjectUniqueName4 = Codesseum.Simulator\\Codesseum.Simulator.csproj
 		SccProjectName4 = Codesseum.Simulator
 		SccLocalPath4 = Codesseum.Simulator
+		SccProjectUniqueName5 = Codesseum.Web\\Codesseum.Web.csproj
+		SccProjectName5 = Codesseum.Web
+		SccLocalPath5 = Codesseum.Web
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +56,10 @@ Global
 		{FBC7855F-D6FF-450A-BEDB-DF7FF24A2D6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBC7855F-D6FF-450A-BEDB-DF7FF24A2D6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBC7855F-D6FF-450A-BEDB-DF7FF24A2D6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77742FF9-0ED4-42CB-8569-B3EF1D0E9F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77742FF9-0ED4-42CB-8569-B3EF1D0E9F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77742FF9-0ED4-42CB-8569-B3EF1D0E9F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77742FF9-0ED4-42CB-8569-B3EF1D0E9F0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
