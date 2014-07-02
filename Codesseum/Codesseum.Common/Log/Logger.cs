@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Codesseum.Common.Log
@@ -14,7 +15,7 @@ namespace Codesseum.Common.Log
         {
             if (_output == null) { return; }
 
-            var bytes = Encoding.UTF8.GetBytes(message);
+            var bytes = Encoding.UTF8.GetBytes(message + Environment.NewLine);
             _output.Write(bytes, 0, bytes.Length);
             _output.Flush();
         }
