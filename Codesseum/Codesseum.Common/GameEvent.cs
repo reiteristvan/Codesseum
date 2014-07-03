@@ -1,4 +1,5 @@
 ﻿using System;
+using Codesseum.Common.Entities;
 using Codesseum.Common.Types;
 
 namespace Codesseum.Common
@@ -9,6 +10,7 @@ namespace Codesseum.Common
         public BotAction BotAction { get; set; }
         public Guid BotId { get; set; }
         public Coordinate Position { get; set; }
+        public ItemInformation ItemInformation { get; set; }
     }
 
     public enum EventType
@@ -19,5 +21,11 @@ namespace Codesseum.Common
         ItemSpawn = 10,
         ItemTaken = 11,
         EndOfGame = 99
+    }
+
+    public class ItemInformation
+    {
+        public ItemType Type { get; internal set; }
+        public PowerUpType PowerUpType { get; internal set; }
     }
 }

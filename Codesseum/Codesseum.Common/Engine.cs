@@ -313,17 +313,23 @@ namespace Codesseum.Common
 
                     if (_map[c] != -1 && botOnCoordinate == null)
                     {
-                        _items.Add(
-                            new Item(c,
-                                (ItemType) random.Next(4),
-                                random.Next(4),
-                                (PowerUpType) random.Next(4)));
+                        var item = new Item(c,
+                            (ItemType) random.Next(4),
+                            random.Next(4),
+                            (PowerUpType) random.Next(4));
+
+                        _items.Add(item);
                         success = true;
 
                         Events.Add(new GameEvent
                         {
                             Type = EventType.ItemSpawn,
-                            Position = c
+                            Position = c,
+                            ItemInformation = new ItemInformation
+                            {
+                                PowerUpType = item.PowerUpType,
+                                Type = item.Type
+                            }
                         });
                     }
                 }
