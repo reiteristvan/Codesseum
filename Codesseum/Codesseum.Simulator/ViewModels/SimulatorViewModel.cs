@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Media;
 using Codesseum.Common;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;
@@ -14,6 +16,13 @@ namespace Codesseum.Simulator.ViewModels
 {
     public class SimulatorViewModel : ViewModelBase
     {
+        static public List<Brush> Colors = new List<Brush>
+        {
+            Brushes.Red, Brushes.Black, Brushes.Green, Brushes.MediumBlue
+        }; 
+
+        static public Dictionary<string, Brush> TeamColors = new Dictionary<string, Brush>();
+
         private readonly object _lock = new object();
 
         public SimulatorViewModel(GameConfiguration configuration)
@@ -21,6 +30,8 @@ namespace Codesseum.Simulator.ViewModels
             _log = new ObservableCollection<string>();
             _cells = new ObservableCollection<CellViewModel>();
             _engine = new Engine(configuration);
+
+            SetColors();
 
             // game event handler
             _engine.Events.CollectionChanged += GameEventHandler;
@@ -52,6 +63,14 @@ namespace Codesseum.Simulator.ViewModels
                     ++y;
                 }
                 ++x;
+            }
+        }
+
+        private void SetColors()
+        {
+            foreach (var team in _engine.Points)
+            {
+                TeamColors.Add(team.Key, Colors.First(c => !TeamColors.ContainsValue(c))); 
             }
         }
 

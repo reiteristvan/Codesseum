@@ -11,6 +11,7 @@ namespace Codesseum.Common
         public Guid BotId { get; set; }
         public Coordinate Position { get; set; }
         public ItemInformation ItemInformation { get; set; }
+        public BotInformation BotInformation { get; set; }
     }
 
     public enum EventType
@@ -27,5 +28,10 @@ namespace Codesseum.Common
     {
         public ItemType Type { get; internal set; }
         public PowerUpType PowerUpType { get; internal set; }
+    }
+
+    public class BotInformation
+    {
+        public int Health { get; internal set; }
     }
 }
