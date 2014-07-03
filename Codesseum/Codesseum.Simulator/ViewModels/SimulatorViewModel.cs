@@ -70,10 +70,10 @@ namespace Codesseum.Simulator.ViewModels
                     case EventType.BotDead:
                         break;
                     case EventType.ItemSpawn:
-                        HandleItemSpawn(gameEvent.Position, true);
+                        HandleItemSpawn(gameEvent.Position, gameEvent.ItemInformation, true);
                         break;
                     case EventType.ItemTaken:
-                        HandleItemSpawn(gameEvent.Position, false);
+                        HandleItemSpawn(gameEvent.Position, gameEvent.ItemInformation, false);
                         break;
                     case EventType.EndOfGame:
                         HandleGameOver();
@@ -82,7 +82,7 @@ namespace Codesseum.Simulator.ViewModels
             }
         }
 
-        private void HandleItemSpawn(Coordinate position, bool onPlace)
+        private void HandleItemSpawn(Coordinate position, ItemInformation itemInformation, bool onPlace)
         {
             var cell = Cells.First(c => c.X == position.X && c.Y == position.Y);
             cell.IsOnItem = onPlace;
@@ -138,7 +138,8 @@ namespace Codesseum.Simulator.ViewModels
 
         private void HandleGameOver()
         {
-            _engine.Reset();   
+            _engine.Reset();
+            _isEngineRuns = false;
         }
 
         // Properties
