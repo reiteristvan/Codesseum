@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 using GalaSoft.MvvmLight;
 
 namespace Codesseum.Simulator.ViewModels
@@ -61,6 +62,20 @@ namespace Codesseum.Simulator.ViewModels
         {
             get { return _isAttacked; }
             set { Set(() => IsAttacked, ref _isAttacked, value); }
+        }
+
+        private Brush _teamColor;
+        public Brush TeamColor
+        {
+            get { return _teamColor; }
+            set { Set(() => TeamColor, ref _teamColor, value); }
+        }
+
+        private int _health;
+        public int Health
+        {
+            get { return _health; }
+            set { Set(() => Health, ref _health, value); }
         }
 
         public Guid BotId { get; set; }

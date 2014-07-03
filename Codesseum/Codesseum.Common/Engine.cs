@@ -53,7 +53,8 @@ namespace Codesseum.Common
                     {
                         BotId = bot.Id,
                         Type = EventType.BotSpawn,
-                        BotAction = new BotAction { Target  = bot.Position }
+                        BotAction = new BotAction { Target  = bot.Position },
+                        BotInformation = new BotInformation { Health = bot.Health }
                     });
                 }
             }
