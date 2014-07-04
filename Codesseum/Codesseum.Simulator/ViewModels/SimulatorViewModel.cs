@@ -33,10 +33,13 @@ namespace Codesseum.Simulator.ViewModels
             // set logging
 
             FileStream logStream = null;
-            if (!File.Exists("log.txt"))
+
+            if (File.Exists("log.txt"))
             {
-                logStream = File.Create("log.txt");
+                File.Delete("log.txt");
             }
+
+            logStream = File.Create("log.txt");
 
             _log = new ObservableCollection<string>();
             _cells = new ObservableCollection<CellViewModel>();
@@ -44,7 +47,6 @@ namespace Codesseum.Simulator.ViewModels
 
             SetColors();
 
-            // game event handler
             _engine.Events.CollectionChanged += GameEventHandler;
 
             StartCommand = new RelayCommand(Start, () => _isEngineRuns == false);
