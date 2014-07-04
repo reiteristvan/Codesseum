@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Codesseum.Common;
 using Codesseum.Common.Entities;
 using Codesseum.Common.Types;
@@ -78,7 +79,7 @@ namespace Zombie
 
         private Bot GetBotInRange()
         {
-            foreach (var bot in World.Current.Bots)
+            foreach (var bot in World.Current.Bots.Where(b => b.TeamName != TeamName))
             {
                 if (IsBotInRange(Position, bot.Position))
                 {
@@ -91,7 +92,7 @@ namespace Zombie
 
         private bool IsBotInRange(Coordinate source, Coordinate target)
         {
-            if (Math.Abs(target.X - source.X) > Range ||
+            if (Math.Abs(target.X - source.X) > Range &&
                 Math.Abs(target.Y - source.Y) > Range)
             {
                 return false;

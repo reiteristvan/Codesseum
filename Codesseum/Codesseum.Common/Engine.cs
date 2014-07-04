@@ -191,7 +191,7 @@ namespace Codesseum.Common
                         }
 
                         // check if bot is in range
-                        if (Math.Abs(action.Target.X - bot.Position.X) > bot.Range ||
+                        if (Math.Abs(action.Target.X - bot.Position.X) > bot.Range &&
                             Math.Abs(action.Target.Y - bot.Position.Y) > bot.Range)
                         {
                             continue;
