@@ -32,14 +32,12 @@ namespace Codesseum.Simulator.ViewModels
 
             // set logging
 
-            FileStream logStream = null;
-
             if (File.Exists("log.txt"))
             {
                 File.Delete("log.txt");
             }
 
-            logStream = File.Create("log.txt");
+            var logStream = File.Create("log.txt");
 
             _log = new ObservableCollection<string>();
             _cells = new ObservableCollection<CellViewModel>();
