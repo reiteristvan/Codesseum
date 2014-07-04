@@ -9,7 +9,10 @@ namespace Codesseum.Simulator.Common.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool) value ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.LightSkyBlue);
+            return (bool) value ? 
+                new SolidColorBrush(Constants.WallColor) 
+                : 
+                new SolidColorBrush(Constants.EmptyCellColor);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

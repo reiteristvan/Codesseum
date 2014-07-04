@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 using Codesseum.Common;
+using Codesseum.Common.Entities;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -115,7 +116,38 @@ namespace Codesseum.Simulator.ViewModels
         {
             var cell = Cells.First(c => c.X == position.X && c.Y == position.Y);
             cell.IsOnItem = onPlace;
-            cell.ImageSource = "1.png";
+            cell.TeamColor = itemInformation == null ? null : GetItemColor(itemInformation);
+        }
+
+        private Brush GetItemColor(ItemInformation itemInformation)
+        {
+            // tresure
+
+            switch (itemInformation.Type)
+            {
+                case ItemType.Special:
+                    return Brushes.LightSkyBlue;
+                case ItemType.Ammunition:
+                    return Brushes.Gray;
+                case ItemType.MediPack:
+                    return Brushes.Magenta;
+                case ItemType.PowerUp:
+                    break;
+            }
+
+            switch (itemInformation.PowerUpType)
+            {
+                case PowerUpType.Health:
+                    return Brushes.Red;
+                case PowerUpType.Defense:
+                    return Brushes.MediumBlue;
+                case PowerUpType.Power:
+                    return Brushes.Black;
+                case PowerUpType.Speed:
+                    return Brushes.OrangeRed;
+            }
+
+            return null;
         }
 
         private void HandleSpawnBot(Guid botId, Coordinate position, BotInformation botInformation)
@@ -148,7 +180,7 @@ namespace Codesseum.Simulator.ViewModels
             source.IsOnBot = false;
             source.BotId = Guid.Empty;
             source.Health = 0;
-            source.TeamColor = Brushes.LightSkyBlue;
+            source.TeamColor = Constants.EmptyCellBrush;
 
             var target = Cells.FirstOrDefault(c => c.X == to.X && c.Y == to.Y);
             target.IsOnBot = true;

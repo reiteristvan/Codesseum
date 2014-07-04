@@ -59,6 +59,7 @@
     <Compile Include="Common\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\CoordinateToCanvasPositionConverter.cs" />
     <Compile Include="Common\Converters\IsSolidToBoolConverter.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Messages\StartMessage.cs" />
     <Compile Include="Models\BotInfoModel.cs" />
     <Compile Include="ViewModels\CellViewModel.cs" />

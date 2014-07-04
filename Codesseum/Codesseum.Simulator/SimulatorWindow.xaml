@@ -102,11 +102,12 @@
                                 <Rectangle Width="12" Height="12" VerticalAlignment="Center" HorizontalAlignment="Center"
                                            Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            Fill="{Binding Path=TeamColor}"/>
-                                <!--<TextBlock Foreground="Gold" Text="I" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
-                                <Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                <!--<Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                       Source="{Binding Path=ImageSource}"/>
+                                       Source="{Binding Path=ImageSource}"/>-->
+                                <Ellipse Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                         Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                         Fill="{Binding Path=TeamColor}" />
                             </Grid>
                         </Border>
                     </DataTemplate>
