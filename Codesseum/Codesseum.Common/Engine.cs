@@ -101,7 +101,7 @@ namespace Codesseum.Common
                 SetItems();
 
                 // move
-                foreach (var bot in _bots.OrderBy(b => b.Speed))
+                foreach (var bot in _bots.OrderByDescending(b => b.Speed))
                 {
                     if (bot.IsDead) { continue; }
 
