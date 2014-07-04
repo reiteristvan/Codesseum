@@ -74,7 +74,7 @@ namespace Zombie
 
         public override int[] GetAttributes()
         {
-            return new[] { 9, 1, 7, 7, 1 };
+            return new[] { 9, 6, 2, 7, 1 };
         }
 
         private Bot GetBotInRange()
