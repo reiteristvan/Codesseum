@@ -76,6 +76,13 @@ namespace Codesseum.Common
 
                     _logger.Log(string.Format("{0}@{1} respawned at {2}", 
                         deadBot.TeamName, deadBot.Id, deadBot.Position));
+
+                    Events.Add(new GameEvent
+                    {
+                        Type = EventType.BotSpawn,
+                        BotId = deadBot.Id,
+                        Position = deadBot.Position
+                    });
                 }
 
                 // initialize items
@@ -156,7 +163,6 @@ namespace Codesseum.Common
                             BotId = bot.Id,
                             Type = EventType.BotAction
                         });
-                        
                     }
                     else // attack bot on target field
                     {
@@ -184,6 +190,7 @@ namespace Codesseum.Common
                         _logger.Log(string.Format("{0}@{1} attacked {2}@{3} with damage: {4}", 
                             bot.TeamName, bot.Id, botOnCoordinate.TeamName, botOnCoordinate.Id, damage));
 
+                        // bot died
                         if (botOnCoordinate.Health <= 0)
                         {
                             var team = _points.First(b => b.Key == bot.TeamName);
