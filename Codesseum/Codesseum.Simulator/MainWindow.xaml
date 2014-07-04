@@ -18,21 +18,30 @@
         <!-- Settings -->
         <StackPanel DataContext="{Binding Path=Configuration}" 
                     Orientation="Horizontal" Grid.Row="0">
-            <TextBlock Text="Map: " />
-            <TextBox Text="{Binding Path=MapPath}" />
-            <Button Command="{Binding ElementName=Root, Path=DataContext.AddMapCommand}" Content="..." />
             
-            <TextBlock Text="Bots per team: " />
-            <TextBox Text="{Binding Path=BotsPerTeam}" />
+            <StackPanel Orientation="Horizontal" Margin="10,5,10,5">
+                <TextBlock Text="Map: " Margin="0, 0, 5, 0" />
+                <TextBox Text="{Binding Path=MapPath}" Width="200" Margin="0,0,5,0" />
+                <Button Command="{Binding ElementName=Root, Path=DataContext.AddMapCommand}" 
+                        Content="..." Width="40" />
+            </StackPanel>
             
-            <TextBlock Text="Number of turns: " />
-            <TextBox Text="{Binding Path=NumberOfTurns}" />
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 10, 5">
+                <TextBlock Text="Bots per team: " Margin="0,0,5,0" />
+                <TextBox Text="{Binding Path=BotsPerTeam}" Width="50" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 10, 5">
+                <TextBlock Text="Number of turns: " Margin="0,0,5,0" />
+                <TextBox Text="{Binding Path=NumberOfTurns}" Width="50" />
+            </StackPanel>
         </StackPanel>
         
         <!-- Bots -->
         <StackPanel Grid.Row="1">
             <ListBox ItemsSource="{Binding Path=BotInformations}" 
-                     SelectedItem="{Binding Path=SelectedBot}" >
+                     SelectedItem="{Binding Path=SelectedBot}"
+                     Height="100">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -48,12 +57,13 @@
             </StackPanel>
         </StackPanel>
         
-        <!-- Log -->
-        <ListBox ItemsSource="{Binding Path=Logs}" Grid.Row="3" />
-        
         <!-- Commands -->
         <StackPanel Grid.Row="2">
-            <Button Command="{Binding Path=StartSimulationCommand}" Content="OK" />
+            <Button Command="{Binding Path=StartSimulationCommand}"
+                    Content="OK" Width="100" Height="30" HorizontalAlignment="Center" />
         </StackPanel>
+        
+        <!-- Log -->
+        <ListBox ItemsSource="{Binding Path=Logs}" Grid.Row="3" />
     </Grid>
 </Window>
