@@ -74,7 +74,7 @@ namespace Zombie
 
         public override int[] GetAttributes()
         {
-            return new[] { 5, 5, 5, 5, 5 };
+            return new[] { 9, 1, 7, 7, 1 };
         }
 
         private Bot GetBotInRange()
@@ -92,7 +92,7 @@ namespace Zombie
 
         private bool IsBotInRange(Coordinate source, Coordinate target)
         {
-            if (Math.Abs(target.X - source.X) > Range &&
+            if (Math.Abs(target.X - source.X) > Range ||
                 Math.Abs(target.Y - source.Y) > Range)
             {
                 return false;

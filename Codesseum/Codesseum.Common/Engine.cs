@@ -121,6 +121,14 @@ namespace Codesseum.Common
                     var source = new Coordinate(bot.Position.X, bot.Position.Y);
                     var botOnCoordinate = _bots.FirstOrDefault(b => b.Position.Equals(action.Target));
 
+                    // check range, bots can attack only cells where they can step on
+
+                    if (Math.Abs(action.Target.X - bot.Position.X) > bot.Range ||
+                        Math.Abs(action.Target.Y - bot.Position.Y) > bot.Range)
+                    {
+                        continue;
+                    }
+
                     if (action.Action == ActionType.Move)
                     {
                         // cell already taken, invalid move
@@ -186,13 +194,6 @@ namespace Codesseum.Common
                         if (botOnCoordinate == null || 
                             bot.Ammunition == 0 || 
                             botOnCoordinate.TeamName == bot.TeamName)
-                        {
-                            continue;
-                        }
-
-                        // check if bot is in range
-                        if (Math.Abs(action.Target.X - bot.Position.X) > bot.Range &&
-                            Math.Abs(action.Target.Y - bot.Position.Y) > bot.Range)
                         {
                             continue;
                         }
