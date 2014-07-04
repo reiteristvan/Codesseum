@@ -40,6 +40,15 @@ namespace Zombie
         public override BotAction NextAction()
         {
             var result = new BotAction { Action = ActionType.Move };
+
+            var botToAttack = GetBotInRange();
+            if (botToAttack != null)
+            {
+                result.Action = ActionType.Attack;
+                result.Target = botToAttack.Position;
+                return result;
+            }
+
             bool success = false;
 
             while (!success)
@@ -65,6 +74,30 @@ namespace Zombie
         public override int[] GetAttributes()
         {
             return new[] { 5, 5, 5, 5, 5 };
+        }
+
+        private Bot GetBotInRange()
+        {
+            foreach (var bot in World.Current.Bots)
+            {
+                if (IsBotInRange(Position, bot.Position))
+                {
+                    return bot;
+                }
+            }
+
+            return null;
+        }
+
+        private bool IsBotInRange(Coordinate source, Coordinate target)
+        {
+            if (Math.Abs(target.X - source.X) > Range ||
+                Math.Abs(target.Y - source.Y) > Range)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static readonly  object _locker = new object();

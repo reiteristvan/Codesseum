@@ -86,7 +86,10 @@ namespace Codesseum.Common
                     {
                         Type = EventType.BotSpawn,
                         BotId = deadBot.Id,
-                        Position = deadBot.Position,
+                        BotAction = new BotAction
+                        {
+                            Target = deadBot.Position
+                        },
                         BotInformation = new BotInformation
                         {
                             Health  = deadBot.Health, Team = deadBot.TeamName
