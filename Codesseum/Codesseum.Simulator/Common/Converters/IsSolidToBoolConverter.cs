@@ -13,7 +13,7 @@ namespace Codesseum.Simulator.Common.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool) value ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.Green);
+            return (bool) value ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.LightSkyBlue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

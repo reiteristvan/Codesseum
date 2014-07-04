@@ -33,5 +33,6 @@ namespace Codesseum.Common
     public class BotInformation
     {
         public int Health { get; internal set; }
+        public string Team { get; internal set; }
     }
 }
