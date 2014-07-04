@@ -210,6 +210,8 @@ namespace Codesseum.Common
             {
                 Type = EventType.EndOfGame
             });
+
+            _logger.Close();
         }
 
         public void Reset()
@@ -226,17 +228,17 @@ namespace Codesseum.Common
         private Coordinate GetRandomBotPosition()
         {
             Coordinate result = null;
-            bool l = false;
+            bool success = false;
             var random = new Random();
 
-            while (!l)
+            while (!success)
             {
                 var _c = Coordinate.CreateRandom(_map.Width, _map.Height, random);
 
                 if (_map[_c] != -1 && !IsBotOnCoordinate(_c) && !IsItemOnCoordinate(_c))
                 {
                     result = _c;
-                    l = true;
+                    success = true;
                 }
             }
 
@@ -316,7 +318,7 @@ namespace Codesseum.Common
                     {
                         var item = new Item(c,
                             (ItemType) random.Next(4),
-                            random.Next(4),
+                            random.Next(1, 5),
                             (PowerUpType) random.Next(4));
 
                         _items.Add(item);

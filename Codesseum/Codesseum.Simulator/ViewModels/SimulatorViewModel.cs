@@ -27,9 +27,19 @@ namespace Codesseum.Simulator.ViewModels
 
         public SimulatorViewModel(GameConfiguration configuration)
         {
+            TeamColors.Clear();
+
+            // set logging
+
+            FileStream logStream = null;
+            if (!File.Exists("log.txt"))
+            {
+                logStream = File.Create("log.txt");
+            }
+
             _log = new ObservableCollection<string>();
             _cells = new ObservableCollection<CellViewModel>();
-            _engine = new Engine(configuration);
+            _engine = new Engine(configuration, logStream);
 
             SetColors();
 
@@ -187,6 +197,6 @@ namespace Codesseum.Simulator.ViewModels
         // Fields
 
         private readonly Engine _engine;
-        private bool _isEngineRuns = false;
+        private bool _isEngineRuns;
     }
 }

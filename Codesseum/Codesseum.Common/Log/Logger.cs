@@ -20,6 +20,12 @@ namespace Codesseum.Common.Log
             _output.Flush();
         }
 
+        public void Close()
+        {
+            _output.Flush();
+            _output.Close();
+        }
+
         private readonly Stream _output;
     }
 }
