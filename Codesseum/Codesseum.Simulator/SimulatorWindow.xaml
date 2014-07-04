@@ -99,8 +99,11 @@
                                 </Style>
                             </Border.Style>
                             <Grid>
-                                <TextBlock Foreground="Red" Text="B" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                       Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <!--<TextBlock Foreground="Red" Text="B" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                       Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
+                                <Rectangle Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Fill="{Binding Path=TeamColor}"/>
                                 <TextBlock Foreground="Gold" Text="I" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>

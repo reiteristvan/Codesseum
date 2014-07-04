@@ -22,6 +22,11 @@ namespace Codesseum.Common.Log
 
         public void Close()
         {
+            if (_output == null)
+            {
+                return;
+            }
+
             _output.Flush();
             _output.Close();
         }

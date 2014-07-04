@@ -54,7 +54,7 @@ namespace Codesseum.Common
                         BotId = bot.Id,
                         Type = EventType.BotSpawn,
                         BotAction = new BotAction { Target  = bot.Position },
-                        BotInformation = new BotInformation { Health = bot.Health }
+                        BotInformation = new BotInformation { Health = bot.Health, Team = bot.TeamName }
                     });
                 }
             }
@@ -81,7 +81,11 @@ namespace Codesseum.Common
                     {
                         Type = EventType.BotSpawn,
                         BotId = deadBot.Id,
-                        Position = deadBot.Position
+                        Position = deadBot.Position,
+                        BotInformation = new BotInformation
+                        {
+                            Health  = deadBot.Health, Team = deadBot.TeamName
+                        }
                     });
                 }
 
@@ -161,7 +165,11 @@ namespace Codesseum.Common
                         {
                             BotAction = action,
                             BotId = bot.Id,
-                            Type = EventType.BotAction
+                            Type = EventType.BotAction,
+                            BotInformation = new BotInformation
+                            {
+                                Health = bot.Health, Team = bot.TeamName
+                            }
                         });
                     }
                     else // attack bot on target field
@@ -203,7 +211,12 @@ namespace Codesseum.Common
                             Events.Add(new GameEvent
                             {
                                 Type = EventType.BotDead,
-                                BotId = botOnCoordinate.Id
+                                BotId = botOnCoordinate.Id,
+                                BotInformation = new BotInformation
+                                {
+                                    Health = bot.Health,
+                                    Team = bot.TeamName
+                                }
                             });
                         }
                     }

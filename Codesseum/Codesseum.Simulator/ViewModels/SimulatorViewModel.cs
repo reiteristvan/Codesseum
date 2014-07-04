@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 using Codesseum.Common;
+using Codesseum.Common.Entities;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -91,10 +92,10 @@ namespace Codesseum.Simulator.ViewModels
                 switch (gameEvent.Type)
                 {
                     case EventType.BotSpawn:
-                        HandleSpawnBot(gameEvent.BotId, gameEvent.BotAction.Target);
+                        HandleSpawnBot(gameEvent.BotId, gameEvent.BotAction.Target, gameEvent.BotInformation);
                         break;
                     case EventType.BotAction:
-                        HandleBotAction(gameEvent.BotId, gameEvent.BotAction);
+                        HandleBotAction(gameEvent.BotId, gameEvent.BotAction, gameEvent.BotInformation);
                         break;
                     case EventType.BotDead:
                         break;
@@ -117,40 +118,46 @@ namespace Codesseum.Simulator.ViewModels
             cell.IsOnItem = onPlace;
         }
 
-        private void HandleSpawnBot(Guid botId, Coordinate position)
+        private void HandleSpawnBot(Guid botId, Coordinate position, BotInformation botInformation)
         {
             var cell = Cells.FirstOrDefault(c => c.X == position.X && c.Y == position.Y);
             cell.IsOnBot = true;
             cell.BotId = botId;
+            cell.Health = botInformation.Health;
+            cell.TeamColor = TeamColors[botInformation.Team];
         }
 
-        private void HandleBotAction(Guid botId, BotAction action)
+        private void HandleBotAction(Guid botId, BotAction action, BotInformation botInformation)
         {
             switch (action.Action)
             {
                 case ActionType.Move:
-                    MoveBot(botId, action.Target);
+                    MoveBot(botId, action.Target, botInformation);
                     break;
                 case ActionType.Attack:
-                    AttackBot(botId, action.Target);
+                    AttackBot(botId, action.Target, botInformation);
                     break;
             }
         }
 
-        private void MoveBot(Guid botId, Coordinate to)
+        private void MoveBot(Guid botId, Coordinate to, BotInformation botInformation)
         {
             Log.Add(string.Format("Move to {0}:{1}", to.X, to.Y));
 
             var source = Cells.FirstOrDefault(c => c.BotId == botId);
             source.IsOnBot = false;
             source.BotId = Guid.Empty;
+            source.Health = 0;
+            source.TeamColor = Brushes.LightSkyBlue;
 
             var target = Cells.FirstOrDefault(c => c.X == to.X && c.Y == to.Y);
             target.IsOnBot = true;
             target.BotId = botId;
+            target.Health = botInformation.Health;
+            target.TeamColor = TeamColors[botInformation.Team];
         }
 
-        private void AttackBot(Guid botId, Coordinate target)
+        private void AttackBot(Guid botId, Coordinate target, BotInformation botInformation)
         {
             var sourceCell = Cells.FirstOrDefault(b => b.BotId == botId);
 
