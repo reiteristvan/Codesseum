@@ -78,6 +78,13 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => Health, ref _health, value); }
         }
 
+        private string _imageSource = "1.png";
+        public string ImageSource
+        {
+            get { return _imageSource; }
+            set { Set(() => ImageSource, ref _imageSource, value); }
+        }
+
         public Guid BotId { get; set; }
     }
 }
