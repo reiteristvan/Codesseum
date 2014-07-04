@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 using Codesseum.Common;
-using Codesseum.Common.Entities;
 using Codesseum.Common.Types;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -116,6 +115,7 @@ namespace Codesseum.Simulator.ViewModels
         {
             var cell = Cells.First(c => c.X == position.X && c.Y == position.Y);
             cell.IsOnItem = onPlace;
+            cell.ImageSource = "1.png";
         }
 
         private void HandleSpawnBot(Guid botId, Coordinate position, BotInformation botInformation)
