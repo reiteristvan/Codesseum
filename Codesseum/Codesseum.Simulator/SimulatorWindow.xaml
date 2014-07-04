@@ -26,6 +26,11 @@
         
         <!-- Points and info panel -->
         <StackPanel Grid.Row="0" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" Margin="5,10,5,10">
+                <TextBlock Text="Turn" Margin="0,0,2,0" />
+                <TextBlock Text="{Binding Path=Turn}" />
+            </StackPanel>
+            
             <!-- Points -->
             <ListView ItemsSource="{Binding Path=Engine.Points}" Margin="10">
                 <ListView.ItemTemplate>
@@ -102,9 +107,6 @@
                                 <Rectangle Width="12" Height="12" VerticalAlignment="Center" HorizontalAlignment="Center"
                                            Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            Fill="{Binding Path=TeamColor}"/>
-                                <!--<Image Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                       Source="{Binding Path=ImageSource}"/>-->
                                 <Ellipse Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"
                                          Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}"
                                          Fill="{Binding Path=TeamColor}" />

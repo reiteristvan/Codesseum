@@ -21,6 +21,7 @@ namespace Codesseum.Common
         BotDead = 2,
         ItemSpawn = 10,
         ItemTaken = 11,
+        StartOfTurn = 88,
         EndOfGame = 99
     }
 
