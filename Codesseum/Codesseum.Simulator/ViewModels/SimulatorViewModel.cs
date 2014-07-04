@@ -91,6 +91,9 @@ namespace Codesseum.Simulator.ViewModels
             {
                 switch (gameEvent.Type)
                 {
+                    case EventType.StartOfTurn:
+                        ++Turn;
+                        break;
                     case EventType.BotSpawn:
                         HandleSpawnBot(gameEvent.BotId, gameEvent.BotAction.Target, gameEvent.BotInformation);
                         break;
@@ -211,6 +214,14 @@ namespace Codesseum.Simulator.ViewModels
         }
 
         // Properties
+
+        private int _turn = 0;
+        public int Turn
+        {
+            get { return _turn; }
+            set { Set(() => Turn, ref _turn, value); }
+        }
+
         public Engine Engine
         {
             get { return _engine; }

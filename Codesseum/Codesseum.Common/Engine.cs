@@ -62,6 +62,11 @@ namespace Codesseum.Common
             int turn = 0;
             while (turn < _configuration.NumberOfTurns)
             {
+                Events.Add(new GameEvent
+                {
+                    Type = EventType.StartOfTurn
+                });
+
                 _logger.Log(string.Format("Turn: {0}", turn));
 
                 // set dead bots alive and reposition
