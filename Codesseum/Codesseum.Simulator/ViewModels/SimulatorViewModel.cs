@@ -198,13 +198,13 @@ namespace Codesseum.Simulator.ViewModels
 
             // trigger and reverse animation
             sourceCell.IsAttacker = true;
-            //sourceCell.IsAttacker = false;
+            sourceCell.IsAttacker = false;
 
             var targetCell = Cells.FirstOrDefault(c => c.X == target.X && c.Y == target.Y);
 
             // trigger and reverse animation
             targetCell.IsAttacked = true;
-            //sourceCell.IsAttacked = false;
+            sourceCell.IsAttacked = false;
         }
 
         private void HandleGameOver()
