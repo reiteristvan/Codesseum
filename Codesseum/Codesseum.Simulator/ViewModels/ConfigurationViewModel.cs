@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.IO;
+using GalaSoft.MvvmLight;
 
 namespace Codesseum.Simulator.ViewModels
 {
@@ -32,12 +33,22 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => GameType, ref _gameType, value); }
         }
 
-        private string _speed = "100";
-
-        public string Speed
+        private string _interval = "100";
+        public string Interval
         {
-            get { return _speed; }
-            set { Set(() => Speed, ref _speed, value); }
+            get { return _interval; }
+            set { Set(() => Interval, ref _interval, value); }
+        }
+
+        public bool IsValid()
+        {
+            if (string.IsNullOrEmpty(MapPath) || !File.Exists(MapPath))
+            {
+                return false;
+            }
+
+            return !string.IsNullOrEmpty(NumberOfTurns) && !string.IsNullOrEmpty(BotsPerTeam) && 
+                   !string.IsNullOrEmpty(GameType) && !string.IsNullOrEmpty(Interval);
         }
     }
 }

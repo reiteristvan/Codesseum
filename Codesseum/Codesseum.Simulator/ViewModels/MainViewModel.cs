@@ -19,7 +19,7 @@ namespace Codesseum.Simulator.ViewModels
             AddMapCommand = new RelayCommand(AddMap);
             AddBotCommand = new RelayCommand(AddBot);
             RemoveBotCommand = new RelayCommand(RemoveBot, () => SelectedBot != null);
-            StartSimulationCommand = new RelayCommand(StartSimulation);
+            StartSimulationCommand = new RelayCommand(StartSimulation, () => Configuration.IsValid());
 
             _botInformations = new ObservableCollection<BotInfoModel>();
             _logs = new ObservableCollection<string>();
@@ -82,7 +82,7 @@ namespace Codesseum.Simulator.ViewModels
                 GameType = int.Parse(Configuration.GameType),
                 MapPath = Configuration.MapPath,
                 NumberOfTurns = int.Parse(Configuration.NumberOfTurns),
-                Speed = int.Parse(Configuration.Speed)
+                Speed = int.Parse(Configuration.Interval)
             });
         }
 
