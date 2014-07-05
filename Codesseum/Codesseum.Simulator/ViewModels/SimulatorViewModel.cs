@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using Codesseum.Common;
@@ -19,7 +20,7 @@ namespace Codesseum.Simulator.ViewModels
     {
         static public List<Brush> Colors = new List<Brush>
         {
-            Brushes.Red, Brushes.Black, Brushes.Green, Brushes.MediumBlue
+            Brushes.OrangeRed, Brushes.Black, Brushes.Green, Brushes.MediumBlue
         }; 
 
         static public Dictionary<string, Brush> TeamColors = new Dictionary<string, Brush>();
@@ -129,11 +130,11 @@ namespace Codesseum.Simulator.ViewModels
             switch (itemInformation.Type)
             {
                 case ItemType.Special:
-                    return Brushes.LightSkyBlue;
+                    return Brushes.Gold;
                 case ItemType.Ammunition:
                     return Brushes.Gray;
                 case ItemType.MediPack:
-                    return Brushes.Magenta;
+                    return Brushes.Red;
                 case ItemType.PowerUp:
                     break;
             }
@@ -209,13 +210,17 @@ namespace Codesseum.Simulator.ViewModels
 
         private void HandleGameOver()
         {
+            var winner = _engine.Points.Aggregate((k, v) => k.Value > v.Value ? k : v).Key;
+
+            MessageBox.Show(string.Format("Winner team: {0}", winner));
+
             _engine.Reset();
             _isEngineRuns = false;
         }
 
         // Properties
 
-        private int _turn = 0;
+        private int _turn;
         public int Turn
         {
             get { return _turn; }

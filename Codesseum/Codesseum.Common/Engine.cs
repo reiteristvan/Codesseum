@@ -347,8 +347,8 @@ namespace Codesseum.Common
                     {
                         var item = new Item(c,
                             (ItemType) random.Next(4),
-                            random.Next(1, 5),
-                            (PowerUpType) random.Next(4));
+                            random.Next(1, 5)
+                            /*(PowerUpType) random.Next(4)*/);
 
                         _items.Add(item);
                         success = true;
