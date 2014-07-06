@@ -52,11 +52,15 @@ namespace Codesseum.Common.Entities
                 throw new ArgumentException("Bot attributes are invalid");
             }
 
+            AttributeValues = values;
+
             Health = values[0];
             Power = values[1];
             Defense = values[2];
             Speed = values[3];
             Range = values[4];
         }
+
+        internal int[] AttributeValues;
     }
 }

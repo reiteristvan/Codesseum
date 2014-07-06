@@ -160,6 +160,7 @@ namespace Codesseum.Simulator.ViewModels
             cell.IsOnBot = true;
             cell.BotId = botId;
             cell.Health = botInformation.Health;
+            cell.MaxHealth = botInformation.MaxHealth;
             cell.TeamColor = TeamColors[botInformation.Team];
         }
 
@@ -190,29 +191,43 @@ namespace Codesseum.Simulator.ViewModels
             target.IsOnBot = true;
             target.BotId = botId;
             target.Health = botInformation.Health;
+            target.MaxHealth = botInformation.MaxHealth;
             target.TeamColor = TeamColors[botInformation.Team];
         }
 
         private void AttackBot(Guid botId, Coordinate target, BotInformation botInformation)
         {
-            var sourceCell = Cells.FirstOrDefault(b => b.BotId == botId);
+            //var sourceCell = Cells.FirstOrDefault(b => b.BotId == botId);
 
             // trigger and reverse animation
-            sourceCell.IsAttacker = true;
-            sourceCell.IsAttacker = false;
+            //sourceCell.IsAttacker = true;
+            //sourceCell.IsAttacker = false;
 
             var targetCell = Cells.FirstOrDefault(c => c.X == target.X && c.Y == target.Y);
+            targetCell.Health = botInformation.Health;
+            targetCell.MaxHealth = botInformation.MaxHealth;
 
             // trigger and reverse animation
-            targetCell.IsAttacked = true;
-            sourceCell.IsAttacked = false;
+            //targetCell.IsAttacked = true;
+            //sourceCell.IsAttacked = false;
         }
 
         private void HandleGameOver()
         {
             var winner = _engine.Points.Aggregate((k, v) => k.Value > v.Value ? k : v).Key;
+            var otherWinners = _engine.Points
+                .Where(t => t.Key != winner && t.Value == _engine.Points.First(tt => tt.Key == winner).Value)
+                .Select(w => w.Key).ToList();
 
-            MessageBox.Show(string.Format("Winner team: {0}", winner));
+            if (otherWinners.Count > 0)
+            {
+                string message = "Draw: " + winner + string.Join(", ", otherWinners);
+                MessageBox.Show(message);
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Winner team: {0}", winner));
+            }
 
             _engine.Reset();
             _isEngineRuns = false;

@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\CoordinateToCanvasPositionConverter.cs" />
+    <Compile Include="Common\Converters\HealthToWidthConverter.cs" />
     <Compile Include="Common\Converters\IsSolidToBoolConverter.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Messages\StartMessage.cs" />
