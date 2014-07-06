@@ -10,7 +10,7 @@ namespace Codesseum.Common.Map
             _path = mapPath;
         }
 
-        public void Load()
+        internal void Load()
         {
             var lines = File.ReadAllLines(_path);
             _map = new int[lines.Length, lines[0].Length];
