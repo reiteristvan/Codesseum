@@ -12,6 +12,7 @@
             <converters:IsSolidToColorConverter x:Key="SolidToBoolConverter" />
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <converters:HealthToWidthConverter x:Key="HealthToWidthConverter" />
+            <converters:TeamToColorConverter x:Key="TeamToColorConverter" />
         </Grid.Resources>
         
         <Grid.ColumnDefinitions>
@@ -36,7 +37,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock FontStyle="Oblique" Text="{Binding Path=Key}" />
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="10" Height="10" Margin="0,0,5,0" 
+                                           Fill="{Binding Path=Key, Converter={StaticResource TeamToColorConverter}}" />
+                                <TextBlock FontStyle="Oblique" Text="{Binding Path=Key}" />
+                            </StackPanel>
                             <TextBlock FontStyle="Italic" Text="{Binding Path=Value}" />
                         </StackPanel>
                     </DataTemplate>

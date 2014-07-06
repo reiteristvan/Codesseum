@@ -60,6 +60,7 @@
     <Compile Include="Common\Converters\CoordinateToCanvasPositionConverter.cs" />
     <Compile Include="Common\Converters\HealthToWidthConverter.cs" />
     <Compile Include="Common\Converters\IsSolidToBoolConverter.cs" />
+    <Compile Include="Common\Converters\TeamToColorConverter.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Messages\StartMessage.cs" />
     <Compile Include="Models\BotInfoModel.cs" />
