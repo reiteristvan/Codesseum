@@ -11,6 +11,7 @@
             <converters:CoordinateToCanvasPositionConverter x:Key="CoordinateConverter" />
             <converters:IsSolidToColorConverter x:Key="SolidToBoolConverter" />
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <converters:HealthToWidthConverter x:Key="HealthToWidthConverter" />
         </Grid.Resources>
         
         <Grid.ColumnDefinitions>
@@ -103,9 +104,21 @@
                                 </Style>
                             </Border.Style>
                             <Grid>
-                                <Rectangle Width="12" Height="12" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           Fill="{Binding Path=TeamColor}"/>
+                                <StackPanel Visibility="{Binding Path=IsOnBot, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Rectangle Width="12" Height="12" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"       
+                                               Fill="{Binding Path=TeamColor}"/>
+                                    <Rectangle Height="5"
+                                          VerticalAlignment="Center" HorizontalAlignment="Center"
+                                          Fill="Green">
+                                        <Rectangle.Width>
+                                            <MultiBinding Converter="{StaticResource HealthToWidthConverter}">
+                                                <Binding Path="Health" />
+                                                <Binding Path="MaxHealth" />
+                                            </MultiBinding>
+                                        </Rectangle.Width>
+                                    </Rectangle>
+                                </StackPanel>
                                 <Ellipse Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"
                                          Visibility="{Binding Path=IsOnItem, Converter={StaticResource BooleanToVisibilityConverter}}"
                                          Fill="{Binding Path=TeamColor}" />

@@ -85,6 +85,14 @@ namespace Codesseum.Simulator.ViewModels
             set { Set(() => ImageSource, ref _imageSource, value); }
         }
 
+        private int _maxHealth;
+
+        public int MaxHealth
+        {
+            get { return _maxHealth; }
+            set { Set(() => MaxHealth, ref _maxHealth, value); }
+        }
+
         public Guid BotId { get; set; }
     }
 }

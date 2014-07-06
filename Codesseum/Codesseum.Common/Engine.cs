@@ -54,7 +54,12 @@ namespace Codesseum.Common
                         BotId = bot.Id,
                         Type = EventType.BotSpawn,
                         BotAction = new BotAction { Target  = bot.Position },
-                        BotInformation = new BotInformation { Health = bot.Health, Team = bot.TeamName }
+                        BotInformation = new BotInformation
+                        {
+                            MaxHealth = bot.AttributeValues[0],
+                            Health = bot.Health, 
+                            Team = bot.TeamName
+                        }
                     });
                 }
             }
@@ -92,7 +97,9 @@ namespace Codesseum.Common
                         },
                         BotInformation = new BotInformation
                         {
-                            Health  = deadBot.Health, Team = deadBot.TeamName
+                            MaxHealth = deadBot.AttributeValues[0],
+                            Health  = deadBot.Health, 
+                            Team = deadBot.TeamName
                         }
                     });
                 }
@@ -184,7 +191,9 @@ namespace Codesseum.Common
                             Type = EventType.BotAction,
                             BotInformation = new BotInformation
                             {
-                                Health = bot.Health, Team = bot.TeamName
+                                MaxHealth = bot.AttributeValues[0],
+                                Health = bot.Health, 
+                                Team = bot.TeamName
                             }
                         });
                     }
@@ -206,6 +215,19 @@ namespace Codesseum.Common
 
                         _logger.Log(string.Format("{0}@{1} attacked {2}@{3} with damage: {4}", 
                             bot.TeamName, bot.Id, botOnCoordinate.TeamName, botOnCoordinate.Id, damage));
+
+                        Events.Add(new GameEvent
+                        {
+                            Type = EventType.BotAction,
+                            BotAction = action,
+                            BotId = bot.Id,
+                            BotInformation = new BotInformation
+                            {
+                                Health = botOnCoordinate.Health,
+                                MaxHealth = botOnCoordinate.AttributeValues[0],
+                                Team = botOnCoordinate.TeamName
+                            }
+                        });
 
                         // bot died
                         if (botOnCoordinate.Health <= 0)
@@ -252,6 +274,38 @@ namespace Codesseum.Common
             {
                 team.Value = 0;
             }
+        }
+
+        public BotInformation GetBotInformation(Guid botId)
+        {
+            var bot = _bots.FirstOrDefault(b => b.Id == botId);
+
+            if (bot == null)
+            {
+                return null;
+            }
+
+            return new BotInformation
+            {
+                Health = bot.Health,
+                Team = bot.TeamName
+            };
+        }
+
+        public BotInformation GetBotInformation(Coordinate position)
+        {
+            var bot = _bots.FirstOrDefault(b => b.Position.Equals(position));
+
+            if (bot == null)
+            {
+                return null;
+            }
+
+            return new BotInformation
+            {
+                Health = bot.Health,
+                Team = bot.TeamName
+            };
         }
 
         private Coordinate GetRandomBotPosition()
