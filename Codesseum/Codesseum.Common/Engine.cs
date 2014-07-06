@@ -389,7 +389,7 @@ namespace Codesseum.Common
         private void SetItems()
         {
             var random = new Random();
-            for (int i = 0; i < 5 - _items.Count; ++i)
+            for (int i = 0; i < 10 - _items.Count; ++i)
             {
                 bool success = false;
                 while (!success)
