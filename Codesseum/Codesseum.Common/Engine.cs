@@ -211,7 +211,7 @@ namespace Codesseum.Common
 
                         var damage = bot.Power - (botOnCoordinate.Defense / 2);
                         --bot.Ammunition;
-                        botOnCoordinate.Health -= damage;
+                        botOnCoordinate.Health -= damage <= 0 ? 0 : damage;
 
                         _logger.Log(string.Format("{0}@{1} attacked {2}@{3} with damage: {4}", 
                             bot.TeamName, bot.Id, botOnCoordinate.TeamName, botOnCoordinate.Id, damage));
