@@ -160,6 +160,10 @@ namespace Codesseum.Common
                                     break;
                                 case ItemType.MediPack:
                                     bot.Health += item.Value;
+                                    if (bot.Health > bot.AttributeValues[0])
+                                    {
+                                        bot.Health = bot.AttributeValues[0];
+                                    }
                                     _logger.Log(string.Format("{0}@{1} taken a medipack", bot.TeamName, bot.Id));
                                     break;
                                 case ItemType.PowerUp:
