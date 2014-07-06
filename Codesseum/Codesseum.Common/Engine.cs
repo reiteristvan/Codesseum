@@ -166,7 +166,7 @@ namespace Codesseum.Common
                                     break;
                                 case ItemType.Special: // treasure hunt mode
                                     var team = _points.First(b => b.Key == bot.TeamName);
-                                    team.Value += item.Value;
+                                    team.Value += item.Value * 2;
                                     _logger.Log(string.Format("{0}@{1} taken a treasure and gain {2} points", 
                                         bot.TeamName, bot.Id, item.Value));
                                     break;
