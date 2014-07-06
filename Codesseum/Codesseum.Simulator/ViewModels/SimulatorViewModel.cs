@@ -33,12 +33,14 @@ namespace Codesseum.Simulator.ViewModels
 
             // set logging
 
-            if (File.Exists("log.txt"))
-            {
-                File.Delete("log.txt");
-            }
+            var logStream = SetLogging();
 
-            var logStream = File.Create("log.txt");
+            //if (File.Exists("log.txt"))
+            //{
+            //    File.Delete("log.txt");
+            //}
+
+            //var logStream = File.Create("log.txt");
 
             _log = new ObservableCollection<string>();
             _cells = new ObservableCollection<CellViewModel>();
@@ -84,6 +86,23 @@ namespace Codesseum.Simulator.ViewModels
             {
                 TeamColors.Add(team.Key, Colors.First(c => !TeamColors.ContainsValue(c))); 
             }
+        }
+
+        private FileStream SetLogging()
+        {
+            if (!Directory.Exists("Logs"))
+            {
+                Directory.CreateDirectory("Logs");
+            }
+
+            string fileName = DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + "_Log.txt";
+
+            if (File.Exists("Logs\\" + fileName))
+            {
+                File.Delete("Logs\\" + fileName);
+            }
+
+            return File.Create("Logs\\" + fileName);
         }
 
         private void GameEventHandler(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
